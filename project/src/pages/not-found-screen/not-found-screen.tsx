@@ -1,9 +1,14 @@
+import { Link } from 'react-router-dom';
+import PageTitle from '../../components/page-title/page-title';
+import { Page } from '../../const';
+
 function NotFoundScreen(): JSX.Element {
   return (
     <>
+      <PageTitle pageName={Page.NotFound} />
       <h1>404</h1>
       <p>This page does not exist.</p>
-      <a href="#EMPTY">Return to the main page.</a>
+      <Link to='/'>Return to the main page.</Link>
     </>
   );
 }

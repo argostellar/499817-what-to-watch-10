@@ -1,6 +1,16 @@
+// import { useParams } from 'react-router-dom';
+import Footer from '../../components/footer/footer';
+import Logo from '../../components/logo/logo';
+import PageTitle from '../../components/page-title/page-title';
+import { Page } from '../../const';
+// import Header from '../../components/header/header';
+
 function MoviePageScreen(): JSX.Element {
+  // const params = useParams();
+
   return (
     <>
+      <PageTitle pageName={Page.Film} />
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
@@ -9,14 +19,10 @@ function MoviePageScreen(): JSX.Element {
 
           <h1 className="visually-hidden">WTW</h1>
 
+          {/* <Header/> */}
+
           <header className="page-header film-card__head">
-            <div className="logo">
-              <a href="main.html" className="logo__link">
-                <span className="logo__letter logo__letter--1">W</span>
-                <span className="logo__letter logo__letter--2">T</span>
-                <span className="logo__letter logo__letter--3">W</span>
-              </a>
-            </div>
+            <Logo/>
 
             <ul className="user-block">
               <li className="user-block__item">
@@ -25,7 +31,7 @@ function MoviePageScreen(): JSX.Element {
                 </div>
               </li>
               <li className="user-block__item">
-                <a className="user-block__link" href="#EMPTY">Sign out</a>
+                <a className="user-block__link" href="#TODO">Sign out</a>
               </li>
             </ul>
           </header>
@@ -144,19 +150,7 @@ function MoviePageScreen(): JSX.Element {
           </div>
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a href="main.html" className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer/>
       </div>
     </>
   );

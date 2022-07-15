@@ -1,6 +1,11 @@
+// import { useParams } from 'react-router-dom';
+import PageTitle from '../../components/page-title/page-title';
+import { Page } from '../../const';
+
 function PlayerScreen(): JSX.Element {
   return (
     <div className="player">
+      <PageTitle pageName={Page.Player} />
       <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
 
       <button type="button" className="player__exit">Exit</button>
