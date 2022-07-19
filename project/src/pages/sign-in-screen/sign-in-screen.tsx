@@ -1,6 +1,6 @@
-import Footer from '../../components/footer/footer';
-import Logo from '../../components/logo/logo';
-import PageTitle from '../../components/page-title/page-title';
+import Footer from '../../components/footer/footer-component';
+import Logo from '../../components/logo/logo-component';
+import PageTitle from '../../components/page-title/page-title-component';
 import { Page } from '../../const';
 
 function SignInScreen(): JSX.Element {

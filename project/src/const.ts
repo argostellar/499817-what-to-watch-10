@@ -2,8 +2,8 @@ export enum AppRoute {
   SignIn = '/login',
   MyList = '/mylist',
   Films = '/films',
-  Film = '/films/:id',
-  AddReview = '/films/:id/review',
+  Film = ':id',
+  AddReview = ':id/review',
   Player = '/player/:id',
   Root = '/',
 }
@@ -20,7 +20,13 @@ export enum Page {
   MyList = 'My List',
   Films = 'Films',
   Film = '[Film Name]',
-  AddReview = 'Add review to [Film Name]',
-  Player = '[Film Name] Player',
+  AddReview = 'Add review to ',
+  Player = ' Player',
   NotFound = '404',
 }
+
+export const BASIC_VALUES = {
+  RECOMENDED_CARDS_COUNT: 4,
+  PLACEHOLDER_FILM_NAME: '[PH] FILM NAME',
+  MY_LIST_CARDS_COUNT: 9,
+} as const;

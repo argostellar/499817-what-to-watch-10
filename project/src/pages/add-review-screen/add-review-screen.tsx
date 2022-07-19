@@ -1,10 +1,15 @@
 // import { useParams } from 'react-router-dom';
-import Logo from '../../components/logo/logo';
-import PageTitle from '../../components/page-title/page-title';
+import Logo from '../../components/logo/logo-component';
+import PageTitle from '../../components/page-title/page-title-component';
 import { Page } from '../../const';
 // import Header from '../../components/header/header';
 
-function AddReviewScreen(): JSX.Element {
+type AddReviewScreenProps = {
+  currentFilm: string;
+}
+
+function AddReviewScreen({currentFilm = 'FILM NAME'}: AddReviewScreenProps): JSX.Element {
+  const pageName = Page.AddReview + currentFilm;
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
@@ -14,7 +19,7 @@ function AddReviewScreen(): JSX.Element {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <PageTitle pageName={Page.AddReview} />
+        <PageTitle pageName={pageName} />
 
         {/* <Header isBreadcrumbs /> */}
 

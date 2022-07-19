@@ -1,16 +1,20 @@
 // import { useParams } from 'react-router-dom';
-import Footer from '../../components/footer/footer';
-import Logo from '../../components/logo/logo';
-import PageTitle from '../../components/page-title/page-title';
-import { Page } from '../../const';
+import CatalogComponent from '../../components/catalog/catalog-component';
+import Footer from '../../components/footer/footer-component';
+import Logo from '../../components/logo/logo-component';
+import PageTitle from '../../components/page-title/page-title-component';
 // import Header from '../../components/header/header';
 
-function MoviePageScreen(): JSX.Element {
-  // const params = useParams();
+type MoviePageScreenProps = {
+  currentFilm: string;
+  cardsCount: number;
+}
 
+function MoviePageScreen({currentFilm = 'FILM NAME', cardsCount = 4}: MoviePageScreenProps): JSX.Element {
+  // const params = useParams();
   return (
     <>
-      <PageTitle pageName={Page.Film} />
+      <PageTitle pageName={currentFilm} />
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
@@ -108,48 +112,7 @@ function MoviePageScreen(): JSX.Element {
       </section>
 
       <div className="page-content">
-        <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">More like this</h2>
-
-          <div className="catalog__films-list">
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Fantastic Beasts: The Crimes of Grindelwald</a>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/bohemian-rhapsody.jpg" alt="Bohemian Rhapsody" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Bohemian Rhapsody</a>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/macbeth.jpg" alt="Macbeth" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Macbeth</a>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/aviator.jpg" alt="Aviator" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Aviator</a>
-              </h3>
-            </article>
-          </div>
-        </section>
-
+        <CatalogComponent cardsCount={cardsCount} isMoreLikeThis />
         <Footer/>
       </div>
     </>

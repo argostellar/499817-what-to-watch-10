@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import PageTitle from '../../components/page-title/page-title';
+import PageTitle from '../../components/page-title/page-title-component';
 import { Page } from '../../const';
 
 function NotFoundScreen(): JSX.Element {
