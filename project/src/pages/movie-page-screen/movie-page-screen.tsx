@@ -1,8 +1,10 @@
 // import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import CatalogComponent from '../../components/catalog/catalog-component';
 import Footer from '../../components/footer/footer-component';
 import Logo from '../../components/logo/logo-component';
 import PageTitle from '../../components/page-title/page-title-component';
+// import { AppRoute } from '../../const';
 // import Header from '../../components/header/header';
 
 type MoviePageScreenProps = {
@@ -62,7 +64,8 @@ function MoviePageScreen({currentFilm = 'FILM NAME', cardsCount = 4}: MoviePageS
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <a href="add-review.html" className="btn film-card__button">Add review</a>
+                {/* #TODO Как сделать правильный to-атрибут? */}
+                <Link to='review' className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -112,7 +115,7 @@ function MoviePageScreen({currentFilm = 'FILM NAME', cardsCount = 4}: MoviePageS
       </section>
 
       <div className="page-content">
-        <CatalogComponent cardsCount={cardsCount} isMoreLikeThis />
+        <CatalogComponent cardsCount={cardsCount} isMoreLikeThis isShowMoreBtnShown={false} />
         <Footer/>
       </div>
     </>

@@ -27,6 +27,7 @@ function AddReviewScreen({currentFilm = 'FILM NAME'}: AddReviewScreenProps): JSX
           <Logo/>
 
           <nav className="breadcrumbs">
+            {/* #TODO Как сделать правильную работающую пагинацию? */}
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
                 <a href="film-page.html" className="breadcrumbs__link">The Grand Budapest Hotel</a>
