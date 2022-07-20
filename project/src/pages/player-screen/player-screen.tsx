@@ -1,6 +1,16 @@
-function PlayerScreen(): JSX.Element {
+// import { useParams } from 'react-router-dom';
+import PageTitle from '../../components/page-title/page-title-component';
+import { Page } from '../../const';
+
+type PlayerScreenProps = {
+  currentFilm: string;
+}
+
+function PlayerScreen({currentFilm = 'FILM NAME'}: PlayerScreenProps): JSX.Element {
+  const pageName = currentFilm + Page.Player;
   return (
     <div className="player">
+      <PageTitle pageName={pageName} />
       <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
 
       <button type="button" className="player__exit">Exit</button>

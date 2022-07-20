@@ -1,4 +1,15 @@
-function AddReviewScreen(): JSX.Element {
+// import { useParams } from 'react-router-dom';
+import Logo from '../../components/logo/logo-component';
+import PageTitle from '../../components/page-title/page-title-component';
+import { Page } from '../../const';
+// import Header from '../../components/header/header';
+
+type AddReviewScreenProps = {
+  currentFilm: string;
+}
+
+function AddReviewScreen({currentFilm = 'FILM NAME'}: AddReviewScreenProps): JSX.Element {
+  const pageName = Page.AddReview + currentFilm;
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
@@ -8,22 +19,21 @@ function AddReviewScreen(): JSX.Element {
 
         <h1 className="visually-hidden">WTW</h1>
 
+        <PageTitle pageName={pageName} />
+
+        {/* <Header isBreadcrumbs /> */}
+
         <header className="page-header">
-          <div className="logo">
-            <a href="main.html" className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
+          <Logo/>
 
           <nav className="breadcrumbs">
+            {/* #TODO Как сделать правильную работающую пагинацию? */}
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
                 <a href="film-page.html" className="breadcrumbs__link">The Grand Budapest Hotel</a>
               </li>
               <li className="breadcrumbs__item">
-                <a className="breadcrumbs__link" href="#EMPTY">Add review</a>
+                <a className="breadcrumbs__link" href="#TODO">Add review</a>
               </li>
             </ul>
           </nav>
@@ -35,7 +45,7 @@ function AddReviewScreen(): JSX.Element {
               </div>
             </li>
             <li className="user-block__item">
-              <a className="user-block__link" href="#EMPTY">Sign out</a>
+              <a className="user-block__link" href="#TODO">Sign out</a>
             </li>
           </ul>
         </header>
