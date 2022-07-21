@@ -9,15 +9,19 @@ import PlayerScreen from '../../pages/player-screen/player-screen';
 import SignInScreen from '../../pages/sign-in-screen/sign-in-screen';
 import PrivateRoute from '../private-route/private-route-component';
 import Layout from '../layout/layout-component';
+import { Reviews } from '../../types/review';
+import { Films } from '../../types/film';
 
 type AppScreenProps = {
   cardsCount: number;
   filmName: string;
   filmReleaseDate: string;
   filmGenre: string;
+  films: Films;
+  reviews: Reviews;
 }
 
-function App({cardsCount, filmName, filmReleaseDate, filmGenre}: AppScreenProps): JSX.Element {
+function App({cardsCount, filmName, filmReleaseDate, filmGenre, films, reviews}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
