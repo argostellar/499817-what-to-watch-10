@@ -30,10 +30,10 @@ function App({cardsCount, filmName, filmReleaseDate, filmGenre, films, reviews}:
             index
             element={
               <MainScreen
-                cardsCount={cardsCount}
                 filmName={filmName}
                 filmReleaseDate={filmReleaseDate}
                 filmGenre={filmGenre}
+                films={films}
               />
             }
           />
@@ -43,7 +43,9 @@ function App({cardsCount, filmName, filmReleaseDate, filmGenre, films, reviews}:
               <PrivateRoute
                 authorizationStatus={AuthorizationStatus.NoAuth}
               >
-                <MyListScreen />
+                <MyListScreen
+                  films={films}
+                />
               </PrivateRoute>
             }
           />
@@ -53,8 +55,8 @@ function App({cardsCount, filmName, filmReleaseDate, filmGenre, films, reviews}:
               path={AppRoute.Film}
               element={
                 <MoviePageScreen
-                  currentFilm={BASIC_VALUES.PLACEHOLDER_FILM_NAME}
-                  cardsCount={BASIC_VALUES.RECOMENDED_CARDS_COUNT}
+                  films={films}
+                  reviews={reviews}
                 />
               }
             />
@@ -62,7 +64,7 @@ function App({cardsCount, filmName, filmReleaseDate, filmGenre, films, reviews}:
               path={AppRoute.AddReview}
               element={
                 <AddReviewScreen
-                  currentFilm={BASIC_VALUES.PLACEHOLDER_FILM_NAME}
+                  films={films}
                 />
               }
             />

@@ -5,12 +5,13 @@ export type Film = {
   releaseDate: number | Date;
   runTime: number | Date | string;
   ratingTotal: string | number;
-  description: string;
+  description: string[];
   director: string;
   actors: string[];
   videoSrc: string;
   posterSrc: string;
-  reviews: string[] | number[];
+  bgSrc?: string;
+  reviewIds: string[] | number[];
 }
 
 export type Films = Film[];

@@ -4,15 +4,16 @@ import Footer from '../../components/footer/footer-component';
 // import Header from '../../components/header/header';
 import Logo from '../../components/logo/logo-component';
 import CatalogComponent from '../../components/catalog/catalog-component';
+import { Film } from '../../types/film';
 
 type MainScreenProps = {
-  cardsCount: number;
+  films: Film[];
   filmName: string;
   filmReleaseDate: string;
   filmGenre: string;
 }
 
-function MainScreen({ cardsCount, filmName, filmReleaseDate, filmGenre }: MainScreenProps): JSX.Element {
+function MainScreen({ films, filmName, filmReleaseDate, filmGenre }: MainScreenProps): JSX.Element {
   return (
     <>
       <PageTitle pageName={Page.Main}/>
@@ -74,7 +75,7 @@ function MainScreen({ cardsCount, filmName, filmReleaseDate, filmGenre }: MainSc
       </section >
 
       <div className="page-content">
-        <CatalogComponent cardsCount={cardsCount} isMoreLikeThis={false} isShowMoreBtnShown />
+        <CatalogComponent films={films} isMoreLikeThis={false} isShowMoreBtnShown />
         <Footer/>
       </div>
     </>
