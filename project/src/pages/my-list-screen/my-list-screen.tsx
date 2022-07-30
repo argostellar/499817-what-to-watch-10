@@ -2,9 +2,15 @@ import CatalogComponent from '../../components/catalog/catalog-component';
 import Footer from '../../components/footer/footer-component';
 import Logo from '../../components/logo/logo-component';
 import PageTitle from '../../components/page-title/page-title-component';
-import { BASIC_VALUES, Page } from '../../const';
+import { Page } from '../../const';
+import { Film } from '../../types/film';
 
-function MyListScreen(): JSX.Element {
+type MyListScreenProps = {
+  films: Film[];
+};
+
+function MyListScreen(props: MyListScreenProps): JSX.Element {
+  const { films } = props;
   return (
     <div className="user-page">
       <PageTitle pageName={Page.MyList} />
@@ -24,7 +30,7 @@ function MyListScreen(): JSX.Element {
         </ul>
       </header>
 
-      <CatalogComponent cardsCount={BASIC_VALUES.MY_LIST_CARDS_COUNT} isMoreLikeThis={false} isShowMoreBtnShown={false} />
+      <CatalogComponent films={films} isMoreLikeThis={false} isShowMoreBtnShown={false} />
 
       <Footer/>
     </div>

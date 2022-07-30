@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
+import { films } from './mocks/films';
+import { reviews } from './mocks/reviews';
 
 const Setting = {
   CARDS_COUNT: 20,
@@ -20,6 +22,8 @@ root.render(
       filmName={Setting.FILM_NAME}
       filmReleaseDate={Setting.FILM_RELEASE_DATE}
       filmGenre={Setting.FILM_GENRE}
+      films={films}
+      reviews={reviews}
     />
   </React.StrictMode>,
 );

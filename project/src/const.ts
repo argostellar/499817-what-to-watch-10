@@ -30,3 +30,9 @@ export const BASIC_VALUES = {
   PLACEHOLDER_FILM_NAME: '[PH] FILM NAME',
   MY_LIST_CARDS_COUNT: 9,
 } as const;
+
+export enum Tab {
+  Overview = 'Overview',
+  Details = 'Details',
+  Reviews = 'Reviews',
+}
