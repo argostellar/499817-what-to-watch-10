@@ -7,36 +7,47 @@ type FilmListComponentProps = {
 }
 
 type cardState = {
-  isSelected: boolean;
-  currentCardId: string | number | null;
-  videoSrc: string | null;
+  isPlaying: boolean;
+  currentId: string | number | null;
 }
 
 // #TODO Необходимо реализовать управление количеством отрисовываемых карточек
 function FilmListComponent({films}: FilmListComponentProps): JSX.Element {
   const [currentCard, setCurrentCard] = useState<cardState>({
-    isSelected: false,
-    currentCardId: null,
-    videoSrc: null,
+    currentId: null,
+    isPlaying: false
   });
+  let hoverTimerID: NodeJS.Timeout | undefined;
 
-  const handleCardMouseOver = (film: Film) => {
-    const {id, videoSrc} = film;
-    setCurrentCard({...currentCard, isSelected: true, currentCardId: id, videoSrc: videoSrc});
+  const handleMouseOver = (id: string | number) => {
+    // setCurrentCard((prevState) => ({ ...prevState, currentId: id }));
+    hoverTimerID = setTimeout(() => {
+      setCurrentCard(() => ({ currentId: id, isPlaying: true }));
+    }, 2000);
+  };
+
+  const handleMouseOut = () => {
+    if (currentCard.isPlaying === false) {
+      clearTimeout(hoverTimerID);
+    }
+    setCurrentCard(() => ({ currentId: null, isPlaying: false }));
   };
 
   return (
     <div className="catalog__films-list">
       {films.map((film) => {
-        const { id, name, posterSrc } = film;
+        const { id, name, videoSrc, posterSrc } = film;
         return (
           <FilmCardComponent
             key={id}
             id={id}
             name={name}
+            videoSrc={videoSrc}
             posterSrc={posterSrc}
-            onMouseOver={() => handleCardMouseOver(film)}
-            onMouseLeave={() => setCurrentCard({...currentCard, isSelected: false})}
+            isPlaying={currentCard.isPlaying}
+            currentId={currentCard.currentId}
+            onMouseOver={handleMouseOver}
+            onMouseOut={handleMouseOut}
           />
         );
       })}
