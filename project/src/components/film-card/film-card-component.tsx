@@ -1,35 +1,59 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FILM_CARD_VALUES } from '../../const';
 import VideoPlayer from '../video-player/video-player-component';
 
 type FilmCardComponentProps = {
   id: string | number;
-  currentId: string | number | null;
   name: string;
   videoSrc: string;
   posterSrc: string;
+}
+
+type cardState = {
   isPlaying: boolean;
-  onMouseOver: (id: string | number) => void;
-  onMouseOut: () => void;
 }
 
 function FilmCardComponent(props: FilmCardComponentProps): JSX.Element {
-  const { id, name, videoSrc, posterSrc, isPlaying, onMouseOut, onMouseOver, currentId } = props;
+  const { id, name, videoSrc, posterSrc } = props;
   const filmAddress = `/films/${id}`;
 
+  const [cardState, setCardState] = useState<cardState>({
+    isPlaying: false
+  });
+  let hoverTimerID: NodeJS.Timeout | undefined;
+
+  const handleMouseOver = () => {
+    // setCardState((prevState) => ({ ...prevState, currentId: id }));
+    hoverTimerID = setTimeout(() => {
+      setCardState(() => ({ isPlaying: true }));
+    }, 1000);
+  };
+
+  const handleMouseOut = () => {
+    if (cardState.isPlaying === false) {
+      clearTimeout(hoverTimerID);
+    }
+    setCardState(() => ({ isPlaying: false }));
+  };
+
   return (
-    <article className="small-film-card catalog__films-card" onMouseOver={() => onMouseOver(id)} onMouseOut={onMouseOut}>
-      <div className="small-film-card__image">
+    <article
+      className="small-film-card catalog__films-card"
+    >
+      <div
+        className="small-film-card__image"
+        onMouseOver={() => handleMouseOver()}
+        onMouseOut={() => handleMouseOut()}
+      >
         {/* <img src={posterSrc} alt={name} width="280" height="175" /> */}
         <VideoPlayer
-          id={id}
-          currentId={currentId}
           videoSrc={videoSrc}
           posterSrc={posterSrc}
           width={FILM_CARD_VALUES.WIDTH}
           height={FILM_CARD_VALUES.HEIGHT}
           isMuted
-          isPlaying={isPlaying}
+          isPlaying={cardState.isPlaying}
         />
       </div>
       <h3 className="small-film-card__title">

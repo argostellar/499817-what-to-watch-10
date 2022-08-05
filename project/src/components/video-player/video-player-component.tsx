@@ -1,8 +1,6 @@
 import { useEffect, useRef } from 'react';
 
 type VideoPlayerProps = {
-  id: string | number;
-  currentId: string | number | null;
   videoSrc: string;
   posterSrc: string;
   width: number;
@@ -12,7 +10,7 @@ type VideoPlayerProps = {
 }
 
 function VideoPlayer(props: VideoPlayerProps): JSX.Element {
-  const { id, currentId, videoSrc, isMuted, isPlaying, posterSrc, width, height } = props;
+  const { videoSrc, isMuted, isPlaying, posterSrc, width, height } = props;
   const playerRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
@@ -20,13 +18,13 @@ function VideoPlayer(props: VideoPlayerProps): JSX.Element {
       return;
     }
 
-    if (isPlaying && id === currentId) {
+    if (isPlaying) {
       playerRef.current.play();
       return;
     }
 
     playerRef.current.load();
-  }, [isPlaying, currentId, id]);
+  }, [isPlaying]);
 
   return (
     <video
