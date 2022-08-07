@@ -64,7 +64,7 @@ function App({cardsCount, filmName, filmReleaseDate, filmGenre, films, reviews}:
               path={AppRoute.AddReview}
               element={
                 <AddReviewScreen
-                  films={films}
+                  film={films[0]}
                 />
               }
             />

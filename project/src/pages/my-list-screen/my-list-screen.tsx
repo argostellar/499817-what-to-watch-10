@@ -30,7 +30,7 @@ function MyListScreen(props: MyListScreenProps): JSX.Element {
         </ul>
       </header>
 
-      <CatalogComponent films={films} isMoreLikeThis={false} isShowMoreBtnShown={false} />
+      <CatalogComponent films={films} />
 
       <Footer/>
     </div>

@@ -5,19 +5,15 @@ import ShowMoreBtnComponent from '../show-more-btn/show-more-component';
 
 type CatalogComponentProps = {
   films: Film[];
-  isMoreLikeThis: boolean;
-  isShowMoreBtnShown: boolean;
 }
 
-function CatalogComponent({films, isMoreLikeThis, isShowMoreBtnShown}: CatalogComponentProps): JSX.Element {
-  const catalogClassName = isMoreLikeThis ? 'catalog catalog--like-this' : 'catalog';
-  const catalogTitle = isMoreLikeThis ? <h2 className="catalog__title">More like this</h2> : <h2 className="catalog__title visually-hidden">Catalog</h2>;
+function CatalogComponent({films}: CatalogComponentProps): JSX.Element {
   return (
-    <section className={catalogClassName}>
-      {catalogTitle}
-      {isMoreLikeThis ? null : <GenresListComponent />}
+    <section className='catalog'>
+      <h2 className="catalog__title visually-hidden">Catalog</h2>
+      <GenresListComponent />
       <FilmListComponent films={films} />
-      {isShowMoreBtnShown ? <ShowMoreBtnComponent /> : null}
+      <ShowMoreBtnComponent />
     </section>
   );
 }
