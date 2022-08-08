@@ -36,3 +36,8 @@ export enum Tab {
   Details = 'Details',
   Reviews = 'Reviews',
 }
+
+export const FILM_CARD_VALUES = {
+  WIDTH: 280,
+  HEIGHT: 175,
+} as const;
