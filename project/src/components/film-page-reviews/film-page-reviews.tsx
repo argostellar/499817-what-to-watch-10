@@ -1,12 +1,12 @@
 import { Review } from '../../types/review';
-import ReviewsColumnComponent from '../reviews-column/reviews-column-component';
+import ReviewsColumn from '../reviews-column/reviews-column';
 
-type FilmPageReviewsComponentProps = {
+type FilmPageReviewsProps = {
   reviewIds: string[] | number[];
   reviews: Review[];
 }
 
-function FilmPageReviewsComponent(props: FilmPageReviewsComponentProps): JSX.Element {
+function FilmPageReviews(props: FilmPageReviewsProps): JSX.Element {
   const { reviews, reviewIds } = props;
   /*#TODO Такой вариант не мутирует данные? Можно ли оптимизировать создание нужного массива? */
   const currentFilmReviews = reviews.filter((review) => {
@@ -25,10 +25,10 @@ function FilmPageReviewsComponent(props: FilmPageReviewsComponentProps): JSX.Ele
   /*#TODO Они что, сортируются по столбцам по принципу "слева самые высокие оценки, справа самые низкие"? */
   return (
     <div className="film-card__reviews film-card__row">
-      <ReviewsColumnComponent reviews={firstHalf}/>
-      <ReviewsColumnComponent reviews={secondHalf} />
+      <ReviewsColumn reviews={firstHalf}/>
+      <ReviewsColumn reviews={secondHalf} />
     </div>
   );
 }
 
-export default FilmPageReviewsComponent;
+export default FilmPageReviews;

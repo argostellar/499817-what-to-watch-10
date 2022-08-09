@@ -1,4 +1,4 @@
-type FilmPageDetailsComponentProps = {
+type FilmPageDetailsProps = {
   director: string;
   actors: string[];
   runtime: string | number | Date;
@@ -6,7 +6,7 @@ type FilmPageDetailsComponentProps = {
   released: number | Date;
 }
 
-function FilmPageDetailsComponent(props: FilmPageDetailsComponentProps): JSX.Element {
+function FilmPageDetails(props: FilmPageDetailsProps): JSX.Element {
   const { director, actors, runtime, genre, released } = props;
   const actorsList = actors.join(', &#10;');
   return (
@@ -40,4 +40,4 @@ function FilmPageDetailsComponent(props: FilmPageDetailsComponentProps): JSX.Ele
   );
 }
 
-export default FilmPageDetailsComponent;
+export default FilmPageDetails;

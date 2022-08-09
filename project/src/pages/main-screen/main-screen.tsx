@@ -75,7 +75,7 @@ function MainScreen({ films, filmName, filmReleaseDate, filmGenre }: MainScreenP
       </section >
 
       <div className="page-content">
-        <CatalogComponent films={films} isMoreLikeThis={false} isShowMoreBtnShown />
+        <CatalogComponent films={films} />
         <Footer/>
       </div>
     </>

@@ -1,11 +1,9 @@
 // import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import CatalogComponent from '../../components/catalog/catalog-component';
-import FilmPageDetailsComponent from '../../components/film-page-details/film-page-details-component';
+import RecommendedFilms from '../../components/recommended-films/recommended-films';
 import FilmPageNavComponent from '../../components/film-page-nav/film-page-nav-component';
-import FilmPageOverviewComponent from '../../components/film-page-overview/film-page-overview-component';
-import FilmPageReviewsComponent from '../../components/film-page-reviews/film-page-reviews-component';
+import FilmPageTabs from '../../components/film-page-tabs/film-page-tabs';
 import Footer from '../../components/footer/footer-component';
 import Logo from '../../components/logo/logo-component';
 import PageTitle from '../../components/page-title/page-title-component';
@@ -35,14 +33,8 @@ function MoviePageScreen(props: MoviePageScreenProps): JSX.Element {
     name,
     genre,
     releaseDate,
-    runTime,
-    ratingTotal,
-    description,
-    director,
-    actors,
     // videoSrc,
     posterSrc,
-    reviewIds,
   } = currentFilm;
 
   // const params = useParams();
@@ -133,50 +125,14 @@ function MoviePageScreen(props: MoviePageScreenProps): JSX.Element {
 
             <div className="film-card__desc">
               <FilmPageNavComponent activeTab={pageState.currentTab} moviePageCb={handleTabClick}/>
-
-              {
-                pageState.currentTab === Tab.Overview
-                  ?
-                  <FilmPageOverviewComponent
-                    rating={ratingTotal}
-                    reviewsCount={reviews.length}
-                    description={description}
-                    director={director}
-                    actors={actors}
-                  />
-                  :
-                  null
-              }
-              {
-                pageState.currentTab === Tab.Details
-                  ?
-                  <FilmPageDetailsComponent
-                    director={director}
-                    actors={actors}
-                    runtime={runTime}
-                    genre={genre}
-                    released={releaseDate}
-                  />
-                  :
-                  null
-              }
-              {
-                pageState.currentTab === Tab.Reviews
-                  ?
-                  <FilmPageReviewsComponent
-                    reviewIds={reviewIds}
-                    reviews={reviews}
-                  />
-                  :
-                  null
-              }
+              <FilmPageTabs currentTab={pageState.currentTab} currentFilm={currentFilm} reviews={reviews} />
             </div>
           </div>
         </div>
       </section>
 
       <div className="page-content">
-        <CatalogComponent films={films} isMoreLikeThis isShowMoreBtnShown={false} />
+        <RecommendedFilms films={films} />
         <Footer/>
       </div>
     </>

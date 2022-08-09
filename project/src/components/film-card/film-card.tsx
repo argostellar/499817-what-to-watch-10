@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FILM_CARD_VALUES } from '../../const';
-import VideoPlayer from '../video-player/video-player-component';
+import VideoPlayer from '../video-player/video-player';
 
-type FilmCardComponentProps = {
+type FilmCardProps = {
   id: string | number;
   name: string;
   videoSrc: string;
@@ -14,7 +14,7 @@ type cardState = {
   isPlaying: boolean;
 }
 
-function FilmCardComponent(props: FilmCardComponentProps): JSX.Element {
+function FilmCard(props: FilmCardProps): JSX.Element {
   const { id, name, videoSrc, posterSrc } = props;
   const filmAddress = `/films/${id}`;
 
@@ -63,4 +63,4 @@ function FilmCardComponent(props: FilmCardComponentProps): JSX.Element {
   );
 }
 
-export default FilmCardComponent;
+export default FilmCard;

@@ -1,8 +1,8 @@
-type GenresListComponentProps = {
+type GenresListProps = {
   someProp?: string;
 }
 
-function GenresListComponent({someProp}: GenresListComponentProps): JSX.Element {
+function GenresList({someProp}: GenresListProps): JSX.Element {
   return (
     <ul className="catalog__genres-list">
       <li className="catalog__genres-item catalog__genres-item--active">
@@ -39,4 +39,4 @@ function GenresListComponent({someProp}: GenresListComponentProps): JSX.Element 
   );
 }
 
-export default GenresListComponent;
+export default GenresList;

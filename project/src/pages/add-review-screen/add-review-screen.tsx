@@ -8,13 +8,11 @@ import { Film } from '../../types/film';
 // import Header from '../../components/header/header';
 
 type AddReviewScreenProps = {
-  films: Film[];
+  film: Film;
 }
 
-function AddReviewScreen(props: AddReviewScreenProps): JSX.Element {
-  const { films } = props;
-  const currentFilm = films[0];
-  const { id, name } = currentFilm;
+function AddReviewScreen({ film }: AddReviewScreenProps): JSX.Element {
+  const { id, name } = film;
   const pageName = Page.AddReview + name;
   return (
     <section className="film-card film-card--full">

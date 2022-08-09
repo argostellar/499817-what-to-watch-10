@@ -7,8 +7,8 @@ import MyListScreen from '../../pages/my-list-screen/my-list-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PlayerScreen from '../../pages/player-screen/player-screen';
 import SignInScreen from '../../pages/sign-in-screen/sign-in-screen';
-import PrivateRoute from '../private-route/private-route-component';
-import Layout from '../layout/layout-component';
+import PrivateRoute from '../private-route/private-route';
+import Layout from '../layout/layout';
 import { Reviews } from '../../types/review';
 import { Films } from '../../types/film';
 
@@ -64,7 +64,7 @@ function App({cardsCount, filmName, filmReleaseDate, filmGenre, films, reviews}:
               path={AppRoute.AddReview}
               element={
                 <AddReviewScreen
-                  films={films}
+                  film={films[0]}
                 />
               }
             />

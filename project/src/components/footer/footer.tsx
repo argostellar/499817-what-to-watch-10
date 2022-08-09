@@ -1,4 +1,4 @@
-import Logo from '../logo/logo-component';
+import Logo from '../logo/logo';
 
 function Footer(): JSX.Element {
   const footerLogoClass = 'logo__link--light';
