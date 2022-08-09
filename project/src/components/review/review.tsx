@@ -1,10 +1,10 @@
 import { Review } from '../../types/review';
 
-type ReviewComponentProps = {
+type ReviewItemProps = {
   review: Review;
 }
 
-function ReviewComponent({review}: ReviewComponentProps): JSX.Element {
+function ReviewItem({review}: ReviewItemProps): JSX.Element {
   const { reviewText, author, date, rating } = review;
   /*#TODO Переделать даты на необходимый формат */
   const formatedDate = date.toString();
@@ -25,4 +25,4 @@ function ReviewComponent({review}: ReviewComponentProps): JSX.Element {
   );
 }
 
-export default ReviewComponent;
+export default ReviewItem;

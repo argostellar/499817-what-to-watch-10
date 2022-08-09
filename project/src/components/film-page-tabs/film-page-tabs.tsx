@@ -2,9 +2,9 @@ import { Fragment } from 'react';
 import { Tab } from '../../const';
 import { Film } from '../../types/film';
 import { Review } from '../../types/review';
-import FilmPageDetailsComponent from '../film-page-details/film-page-details-component';
-import FilmPageOverviewComponent from '../film-page-overview/film-page-overview-component';
-import FilmPageReviewsComponent from '../film-page-reviews/film-page-reviews-component';
+import FilmPageDetails from '../film-page-details/film-page-details';
+import FilmPageOverview from '../film-page-overview/film-page-overview';
+import FilmPageReviews from '../film-page-reviews/film-page-reviews';
 
 type FilmPageTabsProps = {
   currentTab: string;
@@ -29,7 +29,7 @@ function FilmPageTabs(props: FilmPageTabsProps): JSX.Element {
       {
         currentTab === Tab.Overview
           ?
-          <FilmPageOverviewComponent
+          <FilmPageOverview
             rating={ratingTotal}
             reviewsCount={reviews.length}
             description={description}
@@ -42,7 +42,7 @@ function FilmPageTabs(props: FilmPageTabsProps): JSX.Element {
       {
         currentTab === Tab.Details
           ?
-          <FilmPageDetailsComponent
+          <FilmPageDetails
             director={director}
             actors={actors}
             runtime={runTime}
@@ -55,7 +55,7 @@ function FilmPageTabs(props: FilmPageTabsProps): JSX.Element {
       {
         currentTab === Tab.Reviews
           ?
-          <FilmPageReviewsComponent
+          <FilmPageReviews
             reviewIds={reviewIds}
             reviews={reviews}
           />

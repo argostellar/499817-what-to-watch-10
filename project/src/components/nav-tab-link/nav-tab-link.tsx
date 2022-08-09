@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 
-type NavTabLinkComponentProps = {
+type NavTabLinkProps = {
   activeTab: string;
   tabName: string;
   moviePageCb: (tabName: string) => void;
 }
 
-function NavTabLinkComponent(props: NavTabLinkComponentProps): JSX.Element {
+function NavTabLink(props: NavTabLinkProps): JSX.Element {
   const { activeTab, tabName, moviePageCb } = props;
 
   const defaultClassName = 'film-nav__item';
@@ -20,4 +20,4 @@ function NavTabLinkComponent(props: NavTabLinkComponentProps): JSX.Element {
   );
 }
 
-export default NavTabLinkComponent;
+export default NavTabLink;

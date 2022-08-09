@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { Outlet } from 'react-router-dom';
-import SvgSprite from '../svg-sprite/svg-sprite-component';
+import SvgSprite from '../svg-sprite/svg-sprite';
 
 // Данный компонент не подключен, используется как образец компонента Layout
 

@@ -1,4 +1,4 @@
-type FilmPageOverviewComponentProps = {
+type FilmPageOverviewProps = {
   rating: string | number;
   reviewsCount: number;
   description: string[];
@@ -6,7 +6,7 @@ type FilmPageOverviewComponentProps = {
   actors: string[];
 }
 
-function FilmPageOverviewComponent(prop: FilmPageOverviewComponentProps): JSX.Element {
+function FilmPageOverview(prop: FilmPageOverviewProps): JSX.Element {
   const { rating, reviewsCount, description, director, actors } = prop;
   const actorsList = actors.join(', ');
   return (
@@ -32,4 +32,4 @@ function FilmPageOverviewComponent(prop: FilmPageOverviewComponentProps): JSX.El
   );
 }
 
-export default FilmPageOverviewComponent;
+export default FilmPageOverview;

@@ -1,6 +1,6 @@
-import Breadcrumbs from '../breadcrumbs/breadcrumbs-component';
-import Logo from '../logo/logo-component';
-import UserBlock from '../user-block/user-block-component';
+import Breadcrumbs from '../breadcrumbs/breadcrumbs';
+import Logo from '../logo/logo';
+import UserBlock from '../user-block/user-block';
 
 type HeaderProps = {
   isBreadcrumbs?: boolean

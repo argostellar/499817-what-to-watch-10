@@ -1,6 +1,6 @@
 import { MouseEvent, ChangeEvent, useState } from 'react';
 
-type ReviewAddFormComponentProps = {
+type ReviewAddFormProps = {
   someProp?: string;
 }
 
@@ -9,7 +9,7 @@ type ReviewFormState = {
   reviewText: string;
 }
 
-function ReviewAddFormComponent({someProp}: ReviewAddFormComponentProps): JSX.Element {
+function ReviewAddForm({someProp}: ReviewAddFormProps): JSX.Element {
   const [formState, setFormState] = useState<ReviewFormState>({
     rating: '8',
     reviewText: '',
@@ -88,4 +88,4 @@ function ReviewAddFormComponent({someProp}: ReviewAddFormComponentProps): JSX.El
   );
 }
 
-export default ReviewAddFormComponent;
+export default ReviewAddForm;

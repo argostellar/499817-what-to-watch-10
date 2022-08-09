@@ -1,5 +1,5 @@
 import { Film } from '../../types/film';
-import FilmListComponent from '../films-list/films-list-component';
+import FilmList from '../films-list/films-list';
 
 type RecommendedFilmsProps = {
   films: Film[];
@@ -10,7 +10,7 @@ function RecommendedFilms({films}: RecommendedFilmsProps): JSX.Element {
   return (
     <section className='catalog catalog--like-this'>
       <h2 className="catalog__title">More like this</h2>
-      <FilmListComponent films={sliceOfFilms} />
+      <FilmList films={sliceOfFilms} />
     </section>
   );
 }
