@@ -14,7 +14,7 @@ function NavTabLink(props: NavTabLinkProps): JSX.Element {
   const currentClassName = activeTab === tabName ? activeClassName : defaultClassName;
 
   return (
-    <li className={currentClassName}>
+    <li className={currentClassName} tabIndex={0}>
       <Link to={`#${tabName}`} className="film-nav__link" onClick={() => moviePageCb(tabName)}>{tabName}</Link>
     </li>
   );

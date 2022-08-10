@@ -33,7 +33,6 @@ function App({cardsCount, filmName, filmReleaseDate, filmGenre, films, reviews}:
                 filmName={filmName}
                 filmReleaseDate={filmReleaseDate}
                 filmGenre={filmGenre}
-                films={films}
               />
             }
           />
@@ -43,9 +42,7 @@ function App({cardsCount, filmName, filmReleaseDate, filmGenre, films, reviews}:
               <PrivateRoute
                 authorizationStatus={AuthorizationStatus.NoAuth}
               >
-                <MyListScreen
-                  films={films}
-                />
+                <MyListScreen/>
               </PrivateRoute>
             }
           />

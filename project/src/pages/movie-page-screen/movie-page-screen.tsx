@@ -10,6 +10,8 @@ import PageTitle from '../../components/page-title/page-title';
 import { Tab } from '../../const';
 import { Film } from '../../types/film';
 import { Review } from '../../types/review';
+import { useAppDispatch } from '../../hooks';
+import { changeGenre } from '../../store/action';
 // import { AppRoute } from '../../const';
 // import Header from '../../components/header/header';
 
@@ -25,6 +27,7 @@ type MoviePageState = {
 }
 
 function MoviePageScreen(props: MoviePageScreenProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const { films } = props;
   const { reviews } = props;
   const currentFilm = films[0];
@@ -37,6 +40,7 @@ function MoviePageScreen(props: MoviePageScreenProps): JSX.Element {
     posterSrc,
   } = currentFilm;
 
+  dispatch(changeGenre(genre));
   // const params = useParams();
 
   // const unusedValues = [id, runTime, videoSrc, reviews];
@@ -132,7 +136,7 @@ function MoviePageScreen(props: MoviePageScreenProps): JSX.Element {
       </section>
 
       <div className="page-content">
-        <RecommendedFilms films={films} />
+        <RecommendedFilms />
         <Footer/>
       </div>
     </>

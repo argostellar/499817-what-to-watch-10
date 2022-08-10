@@ -1,11 +1,9 @@
-import { Film } from '../../types/film';
+import { useCurrentGenreFilms } from '../../hooks';
 import FilmList from '../films-list/films-list';
 
-type RecommendedFilmsProps = {
-  films: Film[];
-}
-
-function RecommendedFilms({films}: RecommendedFilmsProps): JSX.Element {
+function RecommendedFilms(): JSX.Element {
+  /*#MEMO Я реализовал отображение фильмов на основании текущего жанра. Жанр устанавливается при заходе на страницу фильма */
+  const films = useCurrentGenreFilms();
   const sliceOfFilms = films.slice(0, 4);
   return (
     <section className='catalog catalog--like-this'>

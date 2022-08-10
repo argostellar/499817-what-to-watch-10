@@ -9,7 +9,7 @@ function UserBlock(): JSX.Element {
         </div>
       </li>
       <li className="user-block__item">
-        <Link className="user-block__link" to="#EMPTY">Sign out</Link>
+        <Link className="user-block__link" to="">Sign out</Link>
       </li>
     </ul>
   );

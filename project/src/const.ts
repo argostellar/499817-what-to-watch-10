@@ -42,8 +42,9 @@ export const FILM_CARD_VALUES = {
   HEIGHT: 175,
 } as const;
 
+/*#QUESTION Если список жанров формируется динамически, нужно ли заводить перечисление? Или проще одну переменную GENRE_ALL?s */
 export const Genre = {
-  ALL: 'all',
+  ALL: 'All genres',
   COMEDY: 'Comedies',
   CRIME: 'Crime',
   DOCUMENTARY: 'Documentary',

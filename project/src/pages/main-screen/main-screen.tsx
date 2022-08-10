@@ -4,16 +4,18 @@ import Footer from '../../components/footer/footer';
 // import Header from '../../components/header/header';
 import Logo from '../../components/logo/logo';
 import CatalogComponent from '../../components/catalog/catalog';
-import { Film } from '../../types/film';
+import { resetApp } from '../../store/action';
+import { useAppDispatch } from '../../hooks';
 
 type MainScreenProps = {
-  films: Film[];
   filmName: string;
   filmReleaseDate: string;
   filmGenre: string;
 }
 
-function MainScreen({ films, filmName, filmReleaseDate, filmGenre }: MainScreenProps): JSX.Element {
+function MainScreen({ filmName, filmReleaseDate, filmGenre }: MainScreenProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  dispatch(resetApp());
   return (
     <>
       <PageTitle pageName={Page.Main}/>
@@ -75,7 +77,7 @@ function MainScreen({ films, filmName, filmReleaseDate, filmGenre }: MainScreenP
       </section >
 
       <div className="page-content">
-        <CatalogComponent films={films} />
+        <CatalogComponent />
         <Footer/>
       </div>
     </>
