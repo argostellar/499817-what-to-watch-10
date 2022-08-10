@@ -1,7 +1,7 @@
-import CatalogComponent from '../../components/catalog/catalog-component';
-import Footer from '../../components/footer/footer-component';
-import Logo from '../../components/logo/logo-component';
-import PageTitle from '../../components/page-title/page-title-component';
+import CatalogComponent from '../../components/catalog/catalog';
+import Footer from '../../components/footer/footer';
+import Logo from '../../components/logo/logo';
+import PageTitle from '../../components/page-title/page-title';
 import { Page } from '../../const';
 import { Film } from '../../types/film';
 

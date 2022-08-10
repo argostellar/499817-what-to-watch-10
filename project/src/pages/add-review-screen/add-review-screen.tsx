@@ -1,8 +1,8 @@
 // import { useParams } from 'react-router-dom';
-import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs-component';
-import Logo from '../../components/logo/logo-component';
-import PageTitle from '../../components/page-title/page-title-component';
-import ReviewAddFormComponent from '../../components/review-add-form/review-add-form-component';
+import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
+import Logo from '../../components/logo/logo';
+import PageTitle from '../../components/page-title/page-title';
+import ReviewAddFormComponent from '../../components/review-add-form/review-add-form';
 import { Page } from '../../const';
 import { Film } from '../../types/film';
 // import Header from '../../components/header/header';

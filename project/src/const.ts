@@ -41,3 +41,16 @@ export const FILM_CARD_VALUES = {
   WIDTH: 280,
   HEIGHT: 175,
 } as const;
+
+export const Genre = {
+  ALL: 'all',
+  COMEDY: 'Comedies',
+  CRIME: 'Crime',
+  DOCUMENTARY: 'Documentary',
+  DRAMA: 'Dramas',
+  HORROR: 'Horror',
+  KIDS_AND_FAMILY: 'Kids&Family',
+  ROMANCE: 'Romance',
+  SCI_FI: 'Sci-Fi',
+  THRILLER: 'Thrillers',
+} as const;

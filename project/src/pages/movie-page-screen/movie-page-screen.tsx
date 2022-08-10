@@ -2,11 +2,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import RecommendedFilms from '../../components/recommended-films/recommended-films';
-import FilmPageNavComponent from '../../components/film-page-nav/film-page-nav-component';
+import FilmPageNavComponent from '../../components/film-page-nav/film-page-nav';
 import FilmPageTabs from '../../components/film-page-tabs/film-page-tabs';
-import Footer from '../../components/footer/footer-component';
-import Logo from '../../components/logo/logo-component';
-import PageTitle from '../../components/page-title/page-title-component';
+import Footer from '../../components/footer/footer';
+import Logo from '../../components/logo/logo';
+import PageTitle from '../../components/page-title/page-title';
 import { Tab } from '../../const';
 import { Film } from '../../types/film';
 import { Review } from '../../types/review';

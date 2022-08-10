@@ -1,9 +1,9 @@
 import { Page } from '../../const';
-import PageTitle from '../../components/page-title/page-title-component';
-import Footer from '../../components/footer/footer-component';
+import PageTitle from '../../components/page-title/page-title';
+import Footer from '../../components/footer/footer';
 // import Header from '../../components/header/header';
-import Logo from '../../components/logo/logo-component';
-import CatalogComponent from '../../components/catalog/catalog-component';
+import Logo from '../../components/logo/logo';
+import CatalogComponent from '../../components/catalog/catalog';
 import { Film } from '../../types/film';
 
 type MainScreenProps = {
