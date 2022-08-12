@@ -10,31 +10,25 @@ type FilmCardProps = {
   posterSrc: string;
 }
 
-type cardState = {
-  isPlaying: boolean;
-}
-
 function FilmCard(props: FilmCardProps): JSX.Element {
   const { id, name, videoSrc, posterSrc } = props;
   const filmAddress = `/films/${id}`;
 
-  const [cardState, setCardState] = useState<cardState>({
-    isPlaying: false
-  });
+  const [isPlaying, setPlayingState] = useState(false);
   let hoverTimerID: NodeJS.Timeout | undefined;
 
   const handleMouseOver = () => {
     // setCardState((prevState) => ({ ...prevState, currentId: id }));
     hoverTimerID = setTimeout(() => {
-      setCardState(() => ({ isPlaying: true }));
-    }, 1000);
+      setPlayingState(true);
+    }, FILM_CARD_VALUES.PREVIEW_TIMEOUT);
   };
 
   const handleMouseOut = () => {
-    if (cardState.isPlaying === false) {
+    if (isPlaying === false) {
       clearTimeout(hoverTimerID);
     }
-    setCardState(() => ({ isPlaying: false }));
+    setPlayingState(false);
   };
 
   return (
@@ -53,7 +47,7 @@ function FilmCard(props: FilmCardProps): JSX.Element {
           width={FILM_CARD_VALUES.WIDTH}
           height={FILM_CARD_VALUES.HEIGHT}
           isMuted
-          isPlaying={cardState.isPlaying}
+          isPlaying={isPlaying}
         />
       </div>
       <h3 className="small-film-card__title">
