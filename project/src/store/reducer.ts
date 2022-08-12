@@ -8,6 +8,7 @@ const INITIAL_FILMS = films;
 const initialState = {
   genre: Genre.ALL,
   films: INITIAL_FILMS,
+  genreFilms: INITIAL_FILMS,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -17,11 +18,12 @@ const reducer = createReducer(initialState, (builder) => {
     })
     /*#QUESTION Зачем действие для получения жанровых фильмов, если жанровые фильмы можно получить опираясь чисто на жанр? */
     .addCase(getGenreFilms, (state, action) => {
-      state.films = action.payload;
+      state.genreFilms = action.payload;
     })
     .addCase(resetApp, (state) => {
       state.genre = Genre.ALL;
       state.films = INITIAL_FILMS;
+      state.genreFilms = INITIAL_FILMS;
     });
 });
 

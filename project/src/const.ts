@@ -40,6 +40,7 @@ export enum Tab {
 export const FILM_CARD_VALUES = {
   WIDTH: 280,
   HEIGHT: 175,
+  PREVIEW_TIMEOUT: 1000,
 } as const;
 
 /*#QUESTION Если список жанров формируется динамически, нужно ли заводить перечисление? Или проще одну переменную GENRE_ALL?s */
