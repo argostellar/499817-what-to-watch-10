@@ -26,7 +26,9 @@ export enum Page {
 }
 
 export const BASIC_VALUES = {
-  RECOMENDED_CARDS_COUNT: 4,
+  RECOMMENDED_CARDS_COUNT: 4,
+  CARDS_PER_RENDER: 8,
+  NO_CARDS_COUNT: 0,
   PLACEHOLDER_FILM_NAME: '[PH] FILM NAME',
   MY_LIST_CARDS_COUNT: 9,
 } as const;
@@ -46,13 +48,5 @@ export const FILM_CARD_VALUES = {
 /*#QUESTION Если список жанров формируется динамически, нужно ли заводить перечисление? Или проще одну переменную GENRE_ALL?s */
 export const Genre = {
   ALL: 'All genres',
-  COMEDY: 'Comedies',
-  CRIME: 'Crime',
-  DOCUMENTARY: 'Documentary',
-  DRAMA: 'Dramas',
-  HORROR: 'Horror',
-  KIDS_AND_FAMILY: 'Kids&Family',
-  ROMANCE: 'Romance',
-  SCI_FI: 'Sci-Fi',
-  THRILLER: 'Thrillers',
+  NONE: 'None',
 } as const;
