@@ -13,7 +13,7 @@ type CatalogState = {
   renderedCards: number;
   isShowMoreBtn: boolean;
 }
-
+/*#MEMO Реализация отображения новых карточек мне кажется громоздкой */
 function Catalog(): JSX.Element {
   const [catalogState, setCatalogState] = useState<CatalogState>({
     genre: Genre.ALL,
@@ -28,6 +28,7 @@ function Catalog(): JSX.Element {
   const currentGenre = useAppSelector((state) => state.genre);
   const currentGenreFilms = useAppSelector((state) => state.genreFilms);
 
+  /*#MEMO Разобрал кастомный хук на простую функцию, оптимизировал реализацию */
   const getCurrentGenreFilms = (films: Film[], genre: string) => {
     if (genre === Genre.ALL) {
       return films;
@@ -49,7 +50,7 @@ function Catalog(): JSX.Element {
       isShowMoreBtn: isBtnShown
     }));
   };
-
+  /*#MEMO Линтер ругается на подстановку одной переменной. Однако если поставить все запрашиваемые, то линтер начинает ругаться на initCatalog() */
   useEffect(() => {
     const newGenreFilmsList = getCurrentGenreFilms(allFilms, currentGenre);
     dispatch(getGenreFilms(newGenreFilmsList));
