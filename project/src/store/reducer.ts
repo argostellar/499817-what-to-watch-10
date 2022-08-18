@@ -1,21 +1,23 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { Genre } from '../const';
 import { films } from '../mocks/films';
-import { Film } from '../types/film';
-import { changeGenre, getGenreFilms, resetApp } from './action';
+import { Films } from '../types/film';
+import { changeGenre, getGenreFilms, loadFilms, setDataLoadedStatus, resetApp } from './action';
 
 type stateType = {
   genre: string;
-  films: Film[];
-  genreFilms: Film[];
+  films: Films;
+  genreFilms: Films;
+  isDataLoaded: boolean;
 };
 
 const INITIAL_FILMS = films;
 
 const initialState: stateType = {
   genre: Genre.ALL,
-  films: INITIAL_FILMS,
+  films: [],
   genreFilms: INITIAL_FILMS,
+  isDataLoaded: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -23,14 +25,20 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(changeGenre, (state, action) => {
       state.genre = action.payload;
     })
-    /*#QUESTION Зачем действие для получения жанровых фильмов, если жанровые фильмы можно получить опираясь чисто на жанр? */
     .addCase(getGenreFilms, (state, action) => {
       state.genreFilms = action.payload;
     })
+    /*#TODO Необходимо переделать данное действие */
     .addCase(resetApp, (state) => {
       state.genre = Genre.ALL;
       state.films = INITIAL_FILMS;
       state.genreFilms = INITIAL_FILMS;
+    })
+    .addCase(loadFilms, (state, action) => {
+      state.films = action.payload;
+    })
+    .addCase(setDataLoadedStatus, (state, action) => {
+      state.isDataLoaded = action.payload;
     });
 });
 
