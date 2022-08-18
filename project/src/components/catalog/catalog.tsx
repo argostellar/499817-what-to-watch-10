@@ -22,11 +22,10 @@ function Catalog(): JSX.Element {
     isShowMoreBtn: false,
   });
 
-  const dispatch = useAppDispatch();
-
-  const allFilms = useAppSelector((state) => state.films);
-  const currentGenre = useAppSelector((state) => state.genre);
-  const currentGenreFilms = useAppSelector((state) => state.genreFilms);
+  const getFilmsToRender = (films: Film[], count: number) => {
+    const filmsToRender = films.slice(BASIC_VALUES.NO_CARDS_COUNT, count);
+    return filmsToRender;
+  };
 
   /*#MEMO Разобрал кастомный хук на простую функцию, оптимизировал реализацию */
   const getCurrentGenreFilms = (films: Film[], genre: string) => {
@@ -50,17 +49,10 @@ function Catalog(): JSX.Element {
       isShowMoreBtn: isBtnShown
     }));
   };
-  /*#MEMO Линтер ругается на подстановку одной переменной. Однако если поставить все запрашиваемые, то линтер начинает ругаться на initCatalog() */
-  useEffect(() => {
-    const newGenreFilmsList = getCurrentGenreFilms(allFilms, currentGenre);
-    dispatch(getGenreFilms(newGenreFilmsList));
-    initCatalog(newGenreFilmsList);
-  }, [currentGenre]);
 
-  const getFilmsToRender = (films: Film[], count: number) => {
-    const filmsToRender = films.slice(BASIC_VALUES.NO_CARDS_COUNT, count);
-    return filmsToRender;
-  };
+  const dispatch = useAppDispatch();
+  const currentGenre = useAppSelector((state) => state.genre);
+  const currentGenreFilms = useAppSelector((state) => getCurrentGenreFilms(state.films, currentGenre));
 
   const handleShowMoreBtnClick = () => {
     let btnStatus = true;
@@ -77,6 +69,12 @@ function Catalog(): JSX.Element {
     }
     setCatalogState((prevState) => ({ ...prevState, isShowMoreBtn: btnStatus, renderedCards: cardsCount }));
   };
+
+  /*#MEMO Линтер ругается на подстановку одной переменной. Однако если поставить все запрашиваемые, то линтер начинает ругаться на initCatalog() */
+  useEffect(() => {
+    dispatch(getGenreFilms(currentGenreFilms));
+    initCatalog(currentGenreFilms);
+  }, [currentGenre]);
 
   return (
     <section className='catalog'>
