@@ -21,6 +21,7 @@ function FilmList({films}: FilmListProps): JSX.Element {
           />
         );
       })}
+      {films.length === 0 && <p>There are no films currently</p>}
     </div>
   );
 }
