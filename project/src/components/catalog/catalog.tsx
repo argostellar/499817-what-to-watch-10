@@ -38,12 +38,8 @@ function Catalog(): JSX.Element {
   const dispatch = useAppDispatch();
   const currentGenre = useAppSelector((state) => state.genre);
   const currentGenreFilms = useAppSelector((state) => getCurrentGenreFilms(state.films, currentGenre));
-  /*#MEMO Если не подключить общий список фильмов в useEffect,
-  то при загрузке приложения вкладка All genres будет отображать пустое место,
-  хотя в store уже лежит список фильмов.
-  Почему-то действие записи в хранилище происходит позже отрисовки компонента Catalog,
-  из-за чего компонент цепляет пустой массив */
-  const currentFilms = useAppSelector((state) => state.films);
+
+  // const currentFilms = useAppSelector((state) => state.films);
 
   const initCatalog = (films: Films): void => {
     const totalCardsCount = films.length;
@@ -85,7 +81,7 @@ function Catalog(): JSX.Element {
     return () => {
       isNeedUpdate = false;
     };
-  }, [currentGenre, currentFilms]);
+  }, [currentGenre]);
 
   return (
     <section className='catalog'>
