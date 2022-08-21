@@ -11,9 +11,10 @@ import PrivateRoute from '../private-route/private-route';
 import Layout from '../layout/layout';
 import { Reviews } from '../../types/review';
 import { Films } from '../../types/film';
+import LoadingSpinner from '../loading-spinner/loading-spinner';
+import { useAppSelector } from '../../hooks';
 
 type AppScreenProps = {
-  cardsCount: number;
   filmName: string;
   filmReleaseDate: string;
   filmGenre: string;
@@ -21,7 +22,15 @@ type AppScreenProps = {
   reviews: Reviews;
 }
 
-function App({cardsCount, filmName, filmReleaseDate, filmGenre, films, reviews}: AppScreenProps): JSX.Element {
+function App({ filmName, filmReleaseDate, filmGenre, films, reviews}: AppScreenProps): JSX.Element {
+  const { isDataLoaded } = useAppSelector((state) => state);
+
+  if (isDataLoaded) {
+    return (
+      <LoadingSpinner />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>

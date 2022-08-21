@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { BASIC_VALUES, Genre } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getGenreFilms } from '../../store/action';
-import { Film } from '../../types/film';
+import { Films } from '../../types/film';
 import FilmList from '../films-list/films-list';
 import GenresList from '../genres-list/genres-list';
 import ShowMoreBtn from '../show-more-btn/show-more-btn';
@@ -22,20 +22,26 @@ function Catalog(): JSX.Element {
     isShowMoreBtn: false,
   });
 
-  const getFilmsToRender = (films: Film[], count: number) => {
+  const getFilmsToRender = (films: Films, count: number) => {
     const filmsToRender = films.slice(BASIC_VALUES.NO_CARDS_COUNT, count);
     return filmsToRender;
   };
 
   /*#MEMO Разобрал кастомный хук на простую функцию, оптимизировал реализацию */
-  const getCurrentGenreFilms = (films: Film[], genre: string) => {
+  const getCurrentGenreFilms = (films: Films, genre: string) => {
     if (genre === Genre.ALL) {
       return films;
     }
     return films.filter((item) => item.genre === genre);
   };
 
-  const initCatalog = (films: Film[]) => {
+  const dispatch = useAppDispatch();
+  const currentGenre = useAppSelector((state) => state.genre);
+  const currentGenreFilms = useAppSelector((state) => getCurrentGenreFilms(state.films, currentGenre));
+
+  // const currentFilms = useAppSelector((state) => state.films);
+
+  const initCatalog = (films: Films): void => {
     const totalCardsCount = films.length;
     const cardsCount = totalCardsCount > BASIC_VALUES.CARDS_PER_RENDER
       ? BASIC_VALUES.CARDS_PER_RENDER
@@ -49,10 +55,6 @@ function Catalog(): JSX.Element {
       isShowMoreBtn: isBtnShown
     }));
   };
-
-  const dispatch = useAppDispatch();
-  const currentGenre = useAppSelector((state) => state.genre);
-  const currentGenreFilms = useAppSelector((state) => getCurrentGenreFilms(state.films, currentGenre));
 
   const handleShowMoreBtnClick = () => {
     let btnStatus = true;
@@ -70,10 +72,15 @@ function Catalog(): JSX.Element {
     setCatalogState((prevState) => ({ ...prevState, isShowMoreBtn: btnStatus, renderedCards: cardsCount }));
   };
 
-  /*#MEMO Линтер ругается на подстановку одной переменной. Однако если поставить все запрашиваемые, то линтер начинает ругаться на initCatalog() */
   useEffect(() => {
+    let isNeedUpdate = true;
+
     dispatch(getGenreFilms(currentGenreFilms));
-    initCatalog(currentGenreFilms);
+    isNeedUpdate && initCatalog(currentGenreFilms);
+
+    return () => {
+      isNeedUpdate = false;
+    };
   }, [currentGenre]);
 
   return (

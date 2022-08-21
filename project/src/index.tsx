@@ -5,6 +5,9 @@ import App from './components/app/app';
 import { films } from './mocks/films';
 import { reviews } from './mocks/reviews';
 import { store } from './store';
+import { fetchFilmsAction } from './store/api-actions';
+
+store.dispatch(fetchFilmsAction());
 
 const Setting = {
   CARDS_COUNT: 20,
@@ -21,7 +24,6 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <App
-        cardsCount={Setting.CARDS_COUNT}
         filmName={Setting.FILM_NAME}
         filmReleaseDate={Setting.FILM_RELEASE_DATE}
         filmGenre={Setting.FILM_GENRE}
