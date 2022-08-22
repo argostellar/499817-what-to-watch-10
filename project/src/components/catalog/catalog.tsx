@@ -13,7 +13,7 @@ type CatalogState = {
   renderedCards: number;
   isShowMoreBtn: boolean;
 }
-/*#MEMO Реализация отображения новых карточек мне кажется громоздкой */
+
 function Catalog(): JSX.Element {
   const [catalogState, setCatalogState] = useState<CatalogState>({
     genre: Genre.ALL,
@@ -27,7 +27,6 @@ function Catalog(): JSX.Element {
     return filmsToRender;
   };
 
-  /*#MEMO Разобрал кастомный хук на простую функцию, оптимизировал реализацию */
   const getCurrentGenreFilms = (films: Films, genre: string) => {
     if (genre === Genre.ALL) {
       return films;
