@@ -12,6 +12,7 @@ import { Film } from '../../types/film';
 import { Review } from '../../types/review';
 import { useAppDispatch } from '../../hooks';
 import { changeGenre } from '../../store/action';
+import UserBlock from '../../components/user-block/user-block';
 // import { AppRoute } from '../../const';
 // import Header from '../../components/header/header';
 
@@ -79,16 +80,7 @@ function MoviePageScreen(props: MoviePageScreenProps): JSX.Element {
           <header className="page-header film-card__head">
             <Logo/>
 
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a className="user-block__link" href="#TODO">Sign out</a>
-              </li>
-            </ul>
+            <UserBlock/>
           </header>
 
           <div className="film-card__wrap">

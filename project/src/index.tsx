@@ -2,11 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
+import ErrorMessage from './components/error-message/error-message';
 import { films } from './mocks/films';
 import { reviews } from './mocks/reviews';
 import { store } from './store';
-import { fetchFilmsAction } from './store/api-actions';
+import { fetchFilmsAction, checkAuthAction } from './store/api-actions';
 
+store.dispatch(checkAuthAction());
 store.dispatch(fetchFilmsAction());
 
 const Setting = {
@@ -23,6 +25,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <ErrorMessage/>
       <App
         filmName={Setting.FILM_NAME}
         filmReleaseDate={Setting.FILM_RELEASE_DATE}

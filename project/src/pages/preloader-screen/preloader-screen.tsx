@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 
-function LoadingSpinner(): JSX.Element {
+function PreloaderScreen(): JSX.Element {
   return (
     <Fragment>
       <h1>Loading...</h1>
@@ -9,4 +9,4 @@ function LoadingSpinner(): JSX.Element {
   );
 }
 
-export default LoadingSpinner;
+export default PreloaderScreen;

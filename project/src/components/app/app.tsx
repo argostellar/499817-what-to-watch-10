@@ -1,5 +1,9 @@
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
-import { AppRoute, AuthorizationStatus, BASIC_VALUES } from '../../const';
+import { AppRoute, BASIC_VALUES } from '../../const';
+import { Reviews } from '../../types/review';
+import { Films } from '../../types/film';
+import { useAppSelector } from '../../hooks';
+import Layout from '../layout/layout';
 import MainScreen from '../../pages/main-screen/main-screen';
 import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
 import MoviePageScreen from '../../pages/movie-page-screen/movie-page-screen';
@@ -8,11 +12,8 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PlayerScreen from '../../pages/player-screen/player-screen';
 import SignInScreen from '../../pages/sign-in-screen/sign-in-screen';
 import PrivateRoute from '../private-route/private-route';
-import Layout from '../layout/layout';
-import { Reviews } from '../../types/review';
-import { Films } from '../../types/film';
-import LoadingSpinner from '../loading-spinner/loading-spinner';
-import { useAppSelector } from '../../hooks';
+import PreloaderScreen from '../../pages/preloader-screen/preloader-screen';
+import { isCheckedAuth } from '../../film';
 
 type AppScreenProps = {
   filmName: string;
@@ -23,11 +24,11 @@ type AppScreenProps = {
 }
 
 function App({ filmName, filmReleaseDate, filmGenre, films, reviews}: AppScreenProps): JSX.Element {
-  const { isDataLoaded } = useAppSelector((state) => state);
+  const { authorizationStatus, isDataLoaded } = useAppSelector((state) => state);
 
-  if (isDataLoaded) {
+  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
     return (
-      <LoadingSpinner />
+      <PreloaderScreen />
     );
   }
 
@@ -49,7 +50,7 @@ function App({ filmName, filmReleaseDate, filmGenre, films, reviews}: AppScreenP
             path={AppRoute.MyList}
             element={
               <PrivateRoute
-                authorizationStatus={AuthorizationStatus.NoAuth}
+                authorizationStatus={authorizationStatus}
               >
                 <MyListScreen/>
               </PrivateRoute>
@@ -69,9 +70,13 @@ function App({ filmName, filmReleaseDate, filmGenre, films, reviews}: AppScreenP
             <Route
               path={AppRoute.AddReview}
               element={
-                <AddReviewScreen
-                  film={films[0]}
-                />
+                <PrivateRoute
+                  authorizationStatus={authorizationStatus}
+                >
+                  <AddReviewScreen
+                    film={films[0]}
+                  />
+                </PrivateRoute>
               }
             />
           </Route>

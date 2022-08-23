@@ -8,10 +8,16 @@ export enum AppRoute {
   Root = '/',
 }
 
+export enum APIRoute {
+  Films = '/films',
+  Login = '/login',
+  Logout = '/logout',
+}
+
 export enum AuthorizationStatus {
-  Auth = 'AUTH',
-  NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN',
+  Auth = 'Auth',
+  NoAuth = 'NoAuth',
+  Unknown = 'Unknown',
 }
 
 export enum Page {
@@ -45,8 +51,9 @@ export const FILM_CARD_VALUES = {
   PREVIEW_TIMEOUT: 1000,
 } as const;
 
-/*#QUESTION Если список жанров формируется динамически, нужно ли заводить перечисление? Или проще одну переменную GENRE_ALL?s */
 export const Genre = {
   ALL: 'All genres',
   NONE: 'None',
 } as const;
+
+export const TIMEOUT_SHOW_ERROR = 3000;
