@@ -1,13 +1,11 @@
 // import { useParams } from 'react-router-dom';
 import PageTitle from '../../components/page-title/page-title';
 import { Page } from '../../const';
+import { useAppSelector } from '../../hooks';
 
-type PlayerScreenProps = {
-  currentFilm: string;
-}
-
-function PlayerScreen({currentFilm = 'FILM NAME'}: PlayerScreenProps): JSX.Element {
-  const pageName = currentFilm + Page.Player;
+function PlayerScreen(): JSX.Element {
+  const { currentFilm } = useAppSelector((state) => state);
+  const pageName = currentFilm.name + Page.Player;
   return (
     <div className="player">
       <PageTitle pageName={pageName} />

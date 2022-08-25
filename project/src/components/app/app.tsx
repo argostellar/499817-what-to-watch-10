@@ -1,7 +1,5 @@
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
-import { AppRoute, BASIC_VALUES } from '../../const';
-import { Reviews } from '../../types/review';
-import { Films } from '../../types/film';
+import {Route, Routes} from 'react-router-dom';
+import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
 import Layout from '../layout/layout';
 import MainScreen from '../../pages/main-screen/main-screen';
@@ -14,16 +12,10 @@ import SignInScreen from '../../pages/sign-in-screen/sign-in-screen';
 import PrivateRoute from '../private-route/private-route';
 import PreloaderScreen from '../../pages/preloader-screen/preloader-screen';
 import { isCheckedAuth } from '../../film';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
-type AppScreenProps = {
-  filmName: string;
-  filmReleaseDate: string;
-  filmGenre: string;
-  films: Films;
-  reviews: Reviews;
-}
-
-function App({ filmName, filmReleaseDate, filmGenre, films, reviews}: AppScreenProps): JSX.Element {
+function App(): JSX.Element {
   const { authorizationStatus, isDataLoaded } = useAppSelector((state) => state);
 
   if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
@@ -33,17 +25,13 @@ function App({ filmName, filmReleaseDate, filmGenre, films, reviews}: AppScreenP
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route path={AppRoute.Root} element={<Layout />}>
           <Route
             index
             element={
-              <MainScreen
-                filmName={filmName}
-                filmReleaseDate={filmReleaseDate}
-                filmGenre={filmGenre}
-              />
+              <MainScreen />
             }
           />
           <Route
@@ -61,10 +49,7 @@ function App({ filmName, filmReleaseDate, filmGenre, films, reviews}: AppScreenP
             <Route
               path={AppRoute.Film}
               element={
-                <MoviePageScreen
-                  films={films}
-                  reviews={reviews}
-                />
+                <MoviePageScreen />
               }
             />
             <Route
@@ -73,9 +58,7 @@ function App({ filmName, filmReleaseDate, filmGenre, films, reviews}: AppScreenP
                 <PrivateRoute
                   authorizationStatus={authorizationStatus}
                 >
-                  <AddReviewScreen
-                    film={films[0]}
-                  />
+                  <AddReviewScreen />
                 </PrivateRoute>
               }
             />
@@ -84,12 +67,12 @@ function App({ filmName, filmReleaseDate, filmGenre, films, reviews}: AppScreenP
         <Route
           path={AppRoute.Player}
           element={
-            <PlayerScreen currentFilm={BASIC_VALUES.PLACEHOLDER_FILM_NAME} />
+            <PlayerScreen />
           }
         />
         <Route path="*" element={<NotFoundScreen />} />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

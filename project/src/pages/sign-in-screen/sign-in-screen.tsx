@@ -21,6 +21,8 @@ function SignInScreen(): JSX.Element {
     dispatch(loginAction(authData));
   };
 
+  const errorMessage = 'errorField#TODO';
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
@@ -50,6 +52,9 @@ function SignInScreen(): JSX.Element {
           className="sign-in__form"
           onSubmit={handleSubmit}
         >
+          <div className="sign-in__message">
+            <p>{errorMessage}</p>
+          </div>
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input
@@ -59,6 +64,7 @@ function SignInScreen(): JSX.Element {
                 placeholder="Email address"
                 name="user-email"
                 id="user-email"
+                required
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
@@ -70,6 +76,8 @@ function SignInScreen(): JSX.Element {
                 placeholder="Password"
                 name="user-password"
                 id="user-password"
+                pattern="[a-zA-Z0-9_]{3,15}"
+                required
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
             </div>

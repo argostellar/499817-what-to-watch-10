@@ -7,10 +7,11 @@ type VideoPlayerProps = {
   height: number;
   isMuted: boolean;
   isPlaying: boolean;
+  backgroundColor: string;
 }
 
 function VideoPlayer(props: VideoPlayerProps): JSX.Element {
-  const { videoSrc, isMuted, isPlaying, posterSrc, width, height } = props;
+  const { videoSrc, isMuted, isPlaying, posterSrc, width, height, backgroundColor } = props;
   const playerRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
@@ -34,7 +35,7 @@ function VideoPlayer(props: VideoPlayerProps): JSX.Element {
       src={videoSrc}
       poster={posterSrc}
       muted={isMuted}
-      style={{objectFit: 'cover'}}
+      style={{objectFit: 'cover', backgroundColor: backgroundColor}}
     >
     </video>
   );

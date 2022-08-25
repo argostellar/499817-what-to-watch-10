@@ -1,5 +1,4 @@
-// import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import RecommendedFilms from '../../components/recommended-films/recommended-films';
 import FilmPageNavComponent from '../../components/film-page-nav/film-page-nav';
@@ -7,55 +6,47 @@ import FilmPageTabs from '../../components/film-page-tabs/film-page-tabs';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
 import PageTitle from '../../components/page-title/page-title';
-import { Tab } from '../../const';
-import { Film } from '../../types/film';
-import { Review } from '../../types/review';
-import { useAppDispatch } from '../../hooks';
-import { changeGenre } from '../../store/action';
+import { AppRoute, AuthorizationStatus, PosterSize, Tab } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import UserBlock from '../../components/user-block/user-block';
-// import { AppRoute } from '../../const';
-// import Header from '../../components/header/header';
-
-type MoviePageScreenProps = {
-  films: Film[];
-  reviews: Review[];
-}
+import FilmCardListBtn from '../../components/film-card-list-btn/film-card-list-btn';
+import { fetchCommentsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
+import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
+import FilmCardBackground from '../../components/film-card-bg/film-card-bg';
+import { changeGenre } from '../../store/action';
 
 type MoviePageState = {
   currentTab: string,
   isInMyList: null | boolean,
-  // unusedValues?: any,
 }
 
-function MoviePageScreen(props: MoviePageScreenProps): JSX.Element {
+function MoviePageScreen(): JSX.Element {
   const dispatch = useAppDispatch();
-  const { films } = props;
-  const { reviews } = props;
-  const currentFilm = films[0];
+
+  const { authorizationStatus } = useAppSelector((state) => state);
+  const { currentFilm } = useAppSelector((state) => state);
+
   const {
-    // id,
     name,
     genre,
-    releaseDate,
-    // videoSrc,
-    posterSrc,
+    released,
+    posterImage,
+    backgroundImage,
+    backgroundColor,
   } = currentFilm;
 
-  dispatch(changeGenre(genre));
-  // const params = useParams();
-
-  // const unusedValues = [id, runTime, videoSrc, reviews];
+  useLayoutEffect(() => {
+    dispatch(changeGenre(genre));
+    dispatch(fetchSimilarFilmsAction());
+    dispatch(fetchCommentsAction());
+  }, [currentFilm]);
 
   const [pageState, setPageState] = useState<MoviePageState>({
     currentTab: Tab.Overview,
     isInMyList: null,
-    // unusedValues: unusedValues,
   });
 
-  /*#TODO Установить изначальное состояние страницы */
-
   const handleTabClick = (tabName: string) => {
-    // evt.preventDefault();
     setPageState((prevState) => ({
       ...prevState,
       currentTab: tabName,
@@ -66,20 +57,14 @@ function MoviePageScreen(props: MoviePageScreenProps): JSX.Element {
     <>
       <PageTitle pageName={name} />
       {}
-      <section className="film-card film-card--full">
+      <section className="film-card film-card--full" style={{ backgroundColor: backgroundColor }}>
         <div className="film-card__hero">
-          <div className="film-card__bg">
-            {/*#TODO Обновление фона для страницы */}
-            <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
-          </div>
+          <FilmCardBackground backgroundImage={backgroundImage} name={name} backgroundColor={backgroundColor} />
 
           <h1 className="visually-hidden">WTW</h1>
 
-          {/* <Header/> */}
-
           <header className="page-header film-card__head">
             <Logo/>
-
             <UserBlock/>
           </header>
 
@@ -88,8 +73,7 @@ function MoviePageScreen(props: MoviePageScreenProps): JSX.Element {
               <h2 className="film-card__title">{name}</h2>
               <p className="film-card__meta">
                 <span className="film-card__genre">{genre}</span>
-                {/* #TODO Как правильную дату поставить? Сделать функцию-обработчик для Date? */}
-                <span className="film-card__year">{releaseDate as number}</span>
+                <span className="film-card__year">{released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -99,15 +83,8 @@ function MoviePageScreen(props: MoviePageScreenProps): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
-                {/* #TODO Как сделать правильный to-атрибут? */}
-                <Link to='review' className="btn film-card__button">Add review</Link>
+                <FilmCardListBtn />
+                {authorizationStatus === AuthorizationStatus.Auth && <Link to={AppRoute.Review} className="btn film-card__button">Add review</Link>}
               </div>
             </div>
           </div>
@@ -115,13 +92,11 @@ function MoviePageScreen(props: MoviePageScreenProps): JSX.Element {
 
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
-            <div className="film-card__poster film-card__poster--big">
-              <img src={posterSrc} alt={name} width="218" height="327" />
-            </div>
+            <FilmCardPoster posterImage={posterImage} name={name} size={PosterSize.BIG} />
 
             <div className="film-card__desc">
-              <FilmPageNavComponent activeTab={pageState.currentTab} moviePageCb={handleTabClick}/>
-              <FilmPageTabs currentTab={pageState.currentTab} currentFilm={currentFilm} reviews={reviews} />
+              <FilmPageNavComponent activeTab={pageState.currentTab} handleClick={handleTabClick}/>
+              <FilmPageTabs currentTab={pageState.currentTab} />
             </div>
           </div>
         </div>

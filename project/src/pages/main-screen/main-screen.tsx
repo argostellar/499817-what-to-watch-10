@@ -1,33 +1,41 @@
-import { Page } from '../../const';
+import { Page, PosterSize } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useLayoutEffect } from 'react';
+import { fetchPromoFilmAction } from '../../store/api-actions';
 import PageTitle from '../../components/page-title/page-title';
 import Footer from '../../components/footer/footer';
-// import Header from '../../components/header/header';
 import Logo from '../../components/logo/logo';
-import CatalogComponent from '../../components/catalog/catalog';
+import Catalog from '../../components/catalog/catalog';
 import UserBlock from '../../components/user-block/user-block';
-// import { resetApp } from '../../store/action';
-// import { useAppDispatch } from '../../hooks';
+import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
+import FilmCardListBtn from '../../components/film-card-list-btn/film-card-list-btn';
+import { resetMainPage } from '../../store/action';
 
-type MainScreenProps = {
-  filmName: string;
-  filmReleaseDate: string;
-  filmGenre: string;
-}
+function MainScreen(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const { currentFilm: film } = useAppSelector((state) => state);
+  const {
+    name,
+    genre,
+    released,
+    backgroundImage,
+    backgroundColor,
+    posterImage,
+  } = film;
 
-function MainScreen({ filmName, filmReleaseDate, filmGenre }: MainScreenProps): JSX.Element {
-  // const dispatch = useAppDispatch();
-  // dispatch(resetApp());
+  useLayoutEffect(() => {
+    dispatch(resetMainPage());
+    dispatch(fetchPromoFilmAction());
+  }, []);
   return (
     <>
       <PageTitle pageName={Page.Main}/>
-      <section className="film-card">
+      <section className="film-card" style={{ backgroundColor: backgroundColor }}>
         <div className="film-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={backgroundImage} alt={name} style={{ backgroundColor: backgroundColor }} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
-
-        {/* <Header/> */}
 
         <header className="page-header film-card__head">
           <Logo/>
@@ -36,15 +44,13 @@ function MainScreen({ filmName, filmReleaseDate, filmGenre }: MainScreenProps): 
 
         <div className="film-card__wrap">
           <div className="film-card__info">
-            <div className="film-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
-            </div>
+            <FilmCardPoster posterImage={posterImage} name={name} size={PosterSize.REGULAR} />
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{filmName}</h2>
+              <h2 className="film-card__title">{name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{filmGenre}</span>
-                <span className="film-card__year">{filmReleaseDate}</span>
+                <span className="film-card__genre">{genre}</span>
+                <span className="film-card__year">{released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -54,13 +60,7 @@ function MainScreen({ filmName, filmReleaseDate, filmGenre }: MainScreenProps): 
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
+                <FilmCardListBtn />
               </div>
             </div>
           </div>
@@ -68,7 +68,7 @@ function MainScreen({ filmName, filmReleaseDate, filmGenre }: MainScreenProps): 
       </section >
 
       <div className="page-content">
-        <CatalogComponent />
+        <Catalog />
         <Footer/>
       </div>
     </>

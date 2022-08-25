@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BASIC_VALUES, Genre } from '../../const';
+import { CARDS_LIST_VALUES, Genre } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getGenreFilms } from '../../store/action';
 import { Films } from '../../types/film';
@@ -17,13 +17,13 @@ type CatalogState = {
 function Catalog(): JSX.Element {
   const [catalogState, setCatalogState] = useState<CatalogState>({
     genre: Genre.ALL,
-    totalCards: BASIC_VALUES.NO_CARDS_COUNT,
-    renderedCards: BASIC_VALUES.NO_CARDS_COUNT,
+    totalCards: CARDS_LIST_VALUES.NO_CARDS_COUNT,
+    renderedCards: CARDS_LIST_VALUES.NO_CARDS_COUNT,
     isShowMoreBtn: false,
   });
 
   const getFilmsToRender = (films: Films, count: number) => {
-    const filmsToRender = films.slice(BASIC_VALUES.NO_CARDS_COUNT, count);
+    const filmsToRender = films.slice(CARDS_LIST_VALUES.NO_CARDS_COUNT, count);
     return filmsToRender;
   };
 
@@ -42,10 +42,10 @@ function Catalog(): JSX.Element {
 
   const initCatalog = (films: Films): void => {
     const totalCardsCount = films.length;
-    const cardsCount = totalCardsCount > BASIC_VALUES.CARDS_PER_RENDER
-      ? BASIC_VALUES.CARDS_PER_RENDER
+    const cardsCount = totalCardsCount > CARDS_LIST_VALUES.CARDS_PER_RENDER
+      ? CARDS_LIST_VALUES.CARDS_PER_RENDER
       : totalCardsCount;
-    const isBtnShown = totalCardsCount >= BASIC_VALUES.CARDS_PER_RENDER;
+    const isBtnShown = totalCardsCount >= CARDS_LIST_VALUES.CARDS_PER_RENDER;
     setCatalogState((prevState) => ({
       ...prevState,
       genre: currentGenre,
@@ -57,14 +57,14 @@ function Catalog(): JSX.Element {
 
   const handleShowMoreBtnClick = () => {
     let btnStatus = true;
-    let incrementValue: number = BASIC_VALUES.CARDS_PER_RENDER;
-    let cardsCount: number = BASIC_VALUES.NO_CARDS_COUNT;
+    let incrementValue: number = CARDS_LIST_VALUES.CARDS_PER_RENDER;
+    let cardsCount: number = CARDS_LIST_VALUES.NO_CARDS_COUNT;
     const diff = catalogState.totalCards - catalogState.renderedCards;
 
-    if (diff > BASIC_VALUES.CARDS_PER_RENDER) {
+    if (diff > CARDS_LIST_VALUES.CARDS_PER_RENDER) {
       incrementValue = incrementValue > diff ? diff : incrementValue;
       cardsCount = catalogState.renderedCards + incrementValue;
-    } else if (diff <= BASIC_VALUES.CARDS_PER_RENDER) {
+    } else if (diff <= CARDS_LIST_VALUES.CARDS_PER_RENDER) {
       cardsCount = catalogState.totalCards;
       btnStatus = false;
     }

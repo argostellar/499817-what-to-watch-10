@@ -4,6 +4,7 @@ export enum AppRoute {
   Films = '/films',
   Film = ':id',
   AddReview = ':id/review',
+  Review = 'review',
   Player = '/player/:id',
   Root = '/',
 }
@@ -12,6 +13,12 @@ export enum APIRoute {
   Films = '/films',
   Login = '/login',
   Logout = '/logout',
+  Film = '/films/',
+  Similar = '/films/{filmId}/similar',
+  Promo = '/promo',
+  Favorite = '/favorite',
+  FavoriteStatus = '/favorite/{filmId}/{status}',
+  Comments = '/comments/',
 }
 
 export enum AuthorizationStatus {
@@ -26,17 +33,20 @@ export enum Page {
   MyList = 'My List',
   Films = 'Films',
   Film = '[Film Name]',
-  AddReview = 'Add review to ',
+  AddReview = 'Add review to the ',
   Player = ' Player',
   NotFound = '404',
 }
 
-export const BASIC_VALUES = {
+export const CARDS_LIST_VALUES = {
   RECOMMENDED_CARDS_COUNT: 4,
   CARDS_PER_RENDER: 8,
   NO_CARDS_COUNT: 0,
-  PLACEHOLDER_FILM_NAME: '[PH] FILM NAME',
-  MY_LIST_CARDS_COUNT: 9,
+} as const;
+
+export const GENRE_LIST_VALUES = {
+  NO_GENRES_COUNT: 0,
+  MAX_GENRES_COUNT: 9,
 } as const;
 
 export enum Tab {
@@ -54,6 +64,46 @@ export const FILM_CARD_VALUES = {
 export const Genre = {
   ALL: 'All genres',
   NONE: 'None',
+} as const;
+
+export const HumanizedRating = {
+  NONE: 'None',
+  BAD: 'Bad',
+  NORMAL: 'Normal',
+  GOOD: 'Good',
+  VERY_GOOD: 'Very good',
+  AWESOME: 'Awesome',
+} as const;
+
+export const DigitalRating = {
+  BAD: 0,
+  NORMAL: 3,
+  GOOD: 5,
+  VERY_GOOD: 8,
+  AWESOME: 10,
+} as const;
+
+export const SignInMessage = {
+  EMAIL: 'Please enter a valid email address',
+  PASSWORD: 'Please enter a valid password',
+  UNRECOGNIZED: 'We can’t recognize this email and password combination.Please try again.',
+} as const;
+
+export const PosterSize = {
+  SMALL: 'film-card__poster--small',
+  BIG: 'film-card__poster--big',
+  REGULAR: '',
+} as const;
+
+export const ReviewTextareaSize = {
+  MIN: 50,
+  MAX: 400,
+} as const;
+
+export const ReviewRating = {
+  NONE: 0,
+  MIN: 1,
+  MAX: 10,
 } as const;
 
 export const TIMEOUT_SHOW_ERROR = 3000;
