@@ -1,16 +1,15 @@
-import { Film } from '../../types/film';
+import { Films } from '../../types/film';
 import FilmCard from '../film-card/film-card';
 
 type FilmListProps = {
-  films: Film[];
+  films: Films;
 }
 
-// #TODO Необходимо реализовать управление количеством отрисовываемых карточек
 function FilmList({films}: FilmListProps): JSX.Element {
   return (
     <div className="catalog__films-list">
       {films.map((film) => {
-        const { id, name, videoSrc, posterSrc } = film;
+        const { id, name, previewVideoLink: videoSrc, previewImage: posterSrc, backgroundColor } = film;
         return (
           <FilmCard
             key={id}
@@ -18,6 +17,7 @@ function FilmList({films}: FilmListProps): JSX.Element {
             name={name}
             videoSrc={videoSrc}
             posterSrc={posterSrc}
+            backgroundColor={backgroundColor}
           />
         );
       })}

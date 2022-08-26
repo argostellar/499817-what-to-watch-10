@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeGenre } from '../../store/action';
@@ -8,19 +9,20 @@ function GenresList(): JSX.Element {
   const currentGenre = useAppSelector((state) => state.genre);
   const films = useAppSelector((state) => state.films);
 
-  /*#QUESTION Что если в строке Genre будет больше одного жанра? Получается будет создана новая вкладка с двумя жанрами */
+  const SLICE_GENRES_START = 0;
+  const SLICE_GENRES_END = 8;
+
   const getGenresList = (filmItems: Film[]) => {
     const genresList = filmItems
       .map((film) => film.genre)
       .filter((item, index, array) => array.indexOf(item) === index)
-      .sort();
+      .sort()
+      .slice(SLICE_GENRES_START, SLICE_GENRES_END);
     genresList.unshift('All genres');
     return genresList;
   };
-  const setItemClassName = (itemGenre:string) => {
-    const itemClassName = itemGenre === currentGenre ? 'catalog__genres-item catalog__genres-item--active' : 'catalog__genres-item';
-    return itemClassName;
-  };
+  const setItemClassName = (itemGenre: string) => classNames({ 'catalog__genres-item': true, 'catalog__genres-item--active': itemGenre === currentGenre });
+
   const genres = getGenresList(films);
   const handleGenreClick = (value:string) => {
     dispatch(changeGenre(value));

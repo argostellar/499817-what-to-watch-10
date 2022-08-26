@@ -1,28 +1,26 @@
 import { Fragment } from 'react';
 import { Tab } from '../../const';
-import { Film } from '../../types/film';
-import { Review } from '../../types/review';
+import { useAppSelector } from '../../hooks';
 import FilmPageDetails from '../film-page-details/film-page-details';
 import FilmPageOverview from '../film-page-overview/film-page-overview';
 import FilmPageReviews from '../film-page-reviews/film-page-reviews';
 
 type FilmPageTabsProps = {
   currentTab: string;
-  currentFilm: Film;
-  reviews: Review[];
 }
 
 function FilmPageTabs(props: FilmPageTabsProps): JSX.Element {
-  const { currentTab, currentFilm, reviews } = props;
+  const { currentFilm, currentReviews: reviews } = useAppSelector((state) => state);
+  const { currentTab } = props;
   const {
     genre,
-    releaseDate,
+    released,
     runTime,
-    ratingTotal,
+    rating,
     description,
     director,
-    actors,
-    reviewIds,
+    starring,
+    scoresCount,
   } = currentFilm;
   return (
     <Fragment>
@@ -30,11 +28,11 @@ function FilmPageTabs(props: FilmPageTabsProps): JSX.Element {
         currentTab === Tab.Overview
           ?
           <FilmPageOverview
-            rating={ratingTotal}
-            reviewsCount={reviews.length}
+            rating={rating}
+            reviewsCount={scoresCount}
             description={description}
             director={director}
-            actors={actors}
+            actors={starring}
           />
           :
           null
@@ -44,10 +42,10 @@ function FilmPageTabs(props: FilmPageTabsProps): JSX.Element {
           ?
           <FilmPageDetails
             director={director}
-            actors={actors}
+            actors={starring}
             runtime={runTime}
             genre={genre}
-            released={releaseDate}
+            released={released}
           />
           :
           null
@@ -56,7 +54,6 @@ function FilmPageTabs(props: FilmPageTabsProps): JSX.Element {
         currentTab === Tab.Reviews
           ?
           <FilmPageReviews
-            reviewIds={reviewIds}
             reviews={reviews}
           />
           :

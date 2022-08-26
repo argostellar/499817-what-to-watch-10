@@ -2,31 +2,31 @@ import { Review } from '../../types/review';
 import ReviewsColumn from '../reviews-column/reviews-column';
 
 type FilmPageReviewsProps = {
-  reviewIds: string[] | number[];
   reviews: Review[];
 }
 
 function FilmPageReviews(props: FilmPageReviewsProps): JSX.Element {
-  const { reviews, reviewIds } = props;
-  /*#TODO Такой вариант не мутирует данные? Можно ли оптимизировать создание нужного массива? */
-  const currentFilmReviews = reviews.filter((review) => {
-    let value = null;
-    for (const id of reviewIds) {
-      if (review.id === id) {
-        value = review;
-      }
-      // return review.id === id ? review : false;
-    }
-    return value;
-  });
-  const reviewsCopy = currentFilmReviews.slice();
-  const firstHalf = reviewsCopy.splice(0, currentFilmReviews.length / 2 ^ 0);
-  const secondHalf = reviewsCopy;
-  /*#TODO Они что, сортируются по столбцам по принципу "слева самые высокие оценки, справа самые низкие"? */
+  const { reviews } = props;
+
+  const reviewsCopy = reviews.slice();
+  const firstHalf = reviewsCopy;
+  const secondHalf = reviewsCopy.splice(0, reviews.length / 2 ^ 0);
+
   return (
     <div className="film-card__reviews film-card__row">
-      <ReviewsColumn reviews={firstHalf}/>
-      <ReviewsColumn reviews={secondHalf} />
+      {
+        reviews.length !== 0
+          ?
+          <>
+            <ReviewsColumn reviews={firstHalf}/>
+            <ReviewsColumn reviews={secondHalf} />
+          </>
+          :
+          <>
+            <p style={{color: '#252525'}}>There are no reviews currently.</p>
+            <p style={{color: '#252525'}}>You can add one!</p>
+          </>
+      }
     </div>
   );
 }

@@ -1,18 +1,19 @@
 import { Review } from '../../types/review';
+import dayjs from 'dayjs';
 
 type ReviewItemProps = {
   review: Review;
 }
 
 function ReviewItem({review}: ReviewItemProps): JSX.Element {
-  const { reviewText, author, date, rating } = review;
+  const { comment, user: {name: author}, date, rating } = review;
   /*#TODO Переделать даты на необходимый формат */
-  const formatedDate = date.toString();
+  const formatedDate = dayjs(date).format('MMMM D, YYYY');
   const attributeDate = date.toString();
   return (
     <div className="review">
       <blockquote className="review__quote">
-        <p className="review__text">{reviewText}</p>
+        <p className="review__text">{comment}</p>
 
         <footer className="review__details">
           <cite className="review__author">{author}</cite>
