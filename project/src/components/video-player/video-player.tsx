@@ -1,17 +1,18 @@
-import { useEffect, useRef } from 'react';
+import { SyntheticEvent, useEffect, useRef } from 'react';
 
 type VideoPlayerProps = {
   videoSrc: string;
-  posterSrc: string;
-  width: number;
-  height: number;
-  isMuted: boolean;
+  previewImg: string;
   isPlaying: boolean;
+  isFullscreen: boolean;
   backgroundColor: string;
+  updateCurrentTime: (currentTime: number) => void;
+  getDuration: (duration: number) => void;
+  changeFullscreenStatus: () => void;
 }
 
 function VideoPlayer(props: VideoPlayerProps): JSX.Element {
-  const { videoSrc, isMuted, isPlaying, posterSrc, width, height, backgroundColor } = props;
+  const { videoSrc, isPlaying, isFullscreen, previewImg, backgroundColor, updateCurrentTime, getDuration, changeFullscreenStatus } = props;
   const playerRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
@@ -19,23 +20,57 @@ function VideoPlayer(props: VideoPlayerProps): JSX.Element {
       return;
     }
 
-    if (isPlaying) {
+    if (isPlaying && playerRef.current.paused) {
       playerRef.current.play();
+      return;
+    }
+
+    if (!isPlaying) {
+      playerRef.current.pause();
       return;
     }
 
     playerRef.current.load();
   }, [isPlaying]);
 
+  useEffect(() => {
+    if (playerRef.current === null) {
+      return;
+    }
+
+    if (isFullscreen) {
+      handleFullscreenChange();
+    }
+  }, [isFullscreen]);
+
+  const handleUpdate = (evt: SyntheticEvent<HTMLVideoElement>) => {
+    if (playerRef.current !== null) {
+      updateCurrentTime(playerRef.current.currentTime);
+    }
+  };
+
+  const handleLoadStart = (evt: SyntheticEvent<HTMLVideoElement>) => {
+    if (playerRef.current !== null) {
+      getDuration(playerRef.current.duration);
+    }
+  };
+
+  const handleFullscreenChange = () => {
+    if (playerRef.current !== null) {
+      playerRef.current.requestFullscreen();
+    }
+    changeFullscreenStatus();
+  };
+
   return (
     <video
       ref={playerRef}
-      width={width}
-      height={height}
+      onTimeUpdate={handleUpdate}
+      onCanPlay={handleLoadStart}
+      className="player__video"
       src={videoSrc}
-      poster={posterSrc}
-      muted={isMuted}
-      style={{objectFit: 'cover', backgroundColor: backgroundColor}}
+      poster={previewImg}
+      style={{ objectFit: 'cover', backgroundColor: backgroundColor }}
     >
     </video>
   );

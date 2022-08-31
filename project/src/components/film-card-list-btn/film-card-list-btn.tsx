@@ -1,16 +1,21 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeFavoriteFilmsAction } from '../../store/api-actions';
+import { changeFavoriteFilmsAction, fetchFavoriteFilmsAction } from '../../store/api-actions';
+import FavoriteCounter from '../favorite-counter/favorite-counter';
 
 function FilmCardListBtn(): JSX.Element {
   const dispatch = useAppDispatch();
   const { authorizationStatus } = useAppSelector((state) => state);
   const { isFavorite } = useAppSelector((state) => state.currentFilm);
-  const count = useAppSelector((state) => state.favoriteFilms.length);
+
+  useEffect(() => {
+    dispatch(fetchFavoriteFilmsAction());
+  }, [isFavorite]);
 
   const handleClick = () => {
-    const favoriteStatus = + !isFavorite;
+    const favoriteStatus = Number(!isFavorite);
     dispatch(changeFavoriteFilmsAction(favoriteStatus));
   };
 
@@ -30,7 +35,7 @@ function FilmCardListBtn(): JSX.Element {
     <button className="btn btn--list film-card__button" type="button" onClick={handleClick}>
       {isFavorite ? tickIcon : plusIcon}
       <span>My list</span>
-      <span className="film-card__count">{count}</span>
+      <FavoriteCounter className='film-card__count' />
     </button>
   );
 

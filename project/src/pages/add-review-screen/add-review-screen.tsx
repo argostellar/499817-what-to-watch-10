@@ -1,4 +1,6 @@
 // import { useParams } from 'react-router-dom';
+import { useLayoutEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import FilmCardBackground from '../../components/film-card-bg/film-card-bg';
 import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
@@ -7,12 +9,24 @@ import PageTitle from '../../components/page-title/page-title';
 import ReviewAddFormComponent from '../../components/review-add-form/review-add-form';
 import UserBlock from '../../components/user-block/user-block';
 import { Page, PosterSize } from '../../const';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchCurrentFilmAction } from '../../store/api-actions';
 
 function AddReviewScreen(): JSX.Element {
+  const dispatch = useAppDispatch();
   const { currentFilm } = useAppSelector((state) => state);
   const { id, name, posterImage, backgroundImage, backgroundColor } = currentFilm;
-  const pageName = Page.AddReview + name;
+  const pageName = `${Page.AddReview}${name}`;
+
+  const { id: filmId } = useParams();
+
+  useLayoutEffect(() => {
+    if (filmId !== undefined) {
+      const formatedId = Number(filmId);
+      dispatch(fetchCurrentFilmAction(formatedId));
+    }
+  }, [filmId]);
+
   return (
     <section className="film-card film-card--full" style={{backgroundColor: backgroundColor}}>
       <div className="film-card__header">

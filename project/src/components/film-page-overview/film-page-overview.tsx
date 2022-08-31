@@ -11,7 +11,7 @@ type FilmPageOverviewProps = {
 function FilmPageOverview(props: FilmPageOverviewProps): JSX.Element {
   const { rating, reviewsCount, description, director, actors } = props;
 
-  const actorsList = actors.join(', ');
+  const actorsList = actors !== undefined ? actors.join(', ') : 'Error occured';
 
   const humanizeRating = (score: number) => {
     let humanizedScore: string = HumanizedRating.NONE;

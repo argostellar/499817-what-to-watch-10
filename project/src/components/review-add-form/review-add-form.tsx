@@ -16,8 +16,8 @@ function ReviewAddForm(): JSX.Element {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const dispatch = useAppDispatch();
-  const { currentFilm, isDataSended } = useAppSelector((state) => state);
-  const rating = Math.trunc(currentFilm.rating);
+  const { isDataSended } = useAppSelector((state) => state);
+  const rating = useAppSelector((state) => Math.trunc(state.currentFilm.rating));
 
   const [formState, setFormState] = useState<ReviewFormState>({
     rating: rating.toString(),

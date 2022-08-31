@@ -1,3 +1,5 @@
+import { UserData } from './types/user-data';
+
 export enum AppRoute {
   SignIn = '/login',
   MyList = '/mylist',
@@ -19,6 +21,8 @@ export enum APIRoute {
   Favorite = '/favorite',
   FavoriteStatus = '/favorite/{filmId}/{status}',
   Comments = '/comments/',
+  Player = '/player/',
+  NotFound = '*',
 }
 
 export enum AuthorizationStatus {
@@ -34,7 +38,7 @@ export enum Page {
   Films = 'Films',
   Film = '[Film Name]',
   AddReview = 'Add review to the ',
-  Player = ' Player',
+  Player = 'Now playing',
   NotFound = '404',
 }
 
@@ -106,4 +110,20 @@ export const ReviewRating = {
   MAX: 10,
 } as const;
 
+export const EmptyUser: UserData = {
+  avatarUrl: 'img/avatar.jpg',
+  email: '0',
+  id: 0,
+  name: 'User',
+  token: '0',
+} as const;
+
 export const TIMEOUT_SHOW_ERROR = 3000;
+
+export const PROGRESS_BAR_MAX_VALUE = 100;
+
+export const TimeUnit = {
+  NEXT_ORDER: 60,
+  TEN: 10,
+  ZERO: 0,
+} as const;

@@ -1,40 +1,163 @@
 // import { useParams } from 'react-router-dom';
+import { useState, MouseEvent, useEffect } from 'react';
+import FullscreenIcon from '../../components/fullscreen-icon/fullscreen-icon';
 import PageTitle from '../../components/page-title/page-title';
-import { Page } from '../../const';
-import { useAppSelector } from '../../hooks';
+import PauseIcon from '../../components/pause-icon/pause-icon';
+import PlayIcon from '../../components/play-icon/play-icon';
+import VideoPlayer from '../../components/video-player/video-player';
+import { APIRoute, Page, TimeUnit, PROGRESS_BAR_MAX_VALUE } from '../../const';
+import { getCorrectAPIRoute } from '../../film';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { redirectToRoute } from '../../store/action';
+
+type PlayerScreenState = {
+  isPlaying: boolean;
+  isFullscreen: boolean;
+  currentTime: number;
+  duration: number;
+};
 
 function PlayerScreen(): JSX.Element {
-  const { currentFilm } = useAppSelector((state) => state);
-  const pageName = currentFilm.name + Page.Player;
+  const dispatch = useAppDispatch();
+  const { id, name, backgroundColor, previewImage, videoLink } = useAppSelector((state) => state.currentFilm);
+  const pageName = `${Page.Player} ${name}`;
+
+  const [playerScreenState, setScreenState] = useState<PlayerScreenState>({
+    isPlaying: false,
+    isFullscreen: false,
+    currentTime: 0,
+    duration: 0,
+  });
+
+  useEffect(() => {
+    if (playerScreenState.currentTime === playerScreenState.duration) {
+      setScreenState((prevState) => ({
+        ...prevState,
+        isPlaying: false,
+      }));
+    }
+  }, [playerScreenState.currentTime, playerScreenState.duration]);
+
+  const handleExitBtnClick = (evt: MouseEvent<HTMLButtonElement>) => {
+    evt.preventDefault();
+    setScreenState(() => ({
+      isPlaying: false,
+      isFullscreen: false,
+      currentTime: 0,
+      duration: 0,
+    }));
+    dispatch(redirectToRoute(getCorrectAPIRoute(APIRoute.Film, id)));
+  };
+
+  const handlePlayBtnClick = (evt: MouseEvent<HTMLButtonElement>) => {
+    evt.preventDefault();
+    setScreenState((prevState) => ({
+      ...prevState,
+      isPlaying: !prevState.isPlaying,
+    }));
+  };
+
+  const handleFullscreenBtnClick = (evt: MouseEvent<HTMLButtonElement>) => {
+    evt.preventDefault();
+    setScreenState((prevState) => ({
+      ...prevState,
+      isFullscreen: true,
+    }));
+  };
+
+  const revertFullscreenStatus = () => {
+    setScreenState((prevState) => ({
+      ...prevState,
+      isFullscreen: false,
+    }));
+  };
+
+  const getCurrentTime = (seconds: number) => {
+    setScreenState((prevState) => ({
+      ...prevState,
+      currentTime: seconds,
+    }));
+  };
+
+  const getCurrentDuration = (seconds: number) => {
+    setScreenState((prevState) => ({
+      ...prevState,
+      duration: seconds,
+    }));
+  };
+
+  const getCorrectTime = () => {
+    const duration = playerScreenState.duration !== null ? playerScreenState.duration : TimeUnit.ZERO;
+    const currentTime = playerScreenState.currentTime !== null ? playerScreenState.currentTime : TimeUnit.ZERO;
+
+    const seconds = Math.trunc(duration - currentTime);
+    const minutes = Math.floor(seconds / TimeUnit.NEXT_ORDER);
+    const hours = Math.floor(minutes / TimeUnit.NEXT_ORDER);
+
+    const currentSeconds = seconds % TimeUnit.NEXT_ORDER;
+    const currentMinutes = minutes % TimeUnit.NEXT_ORDER;
+
+    const secondsTextValue = currentSeconds < TimeUnit.TEN ? `0${currentSeconds}` : `${currentSeconds}`;
+    const minutesTextValue = currentMinutes < TimeUnit.TEN ? `0${currentMinutes}` : `${currentMinutes}`;
+    let hoursTextValue = '';
+
+    if (hours !== TimeUnit.ZERO) {
+      hoursTextValue = hours < TimeUnit.TEN ? `0${hours}:` : `${hours}:`;
+    }
+
+    return `-${hoursTextValue}${minutesTextValue}:${secondsTextValue}`;
+  };
+
+  const getCorrectTogglerPostion = () => {
+    const duration = playerScreenState.duration;
+    const currentTime = playerScreenState.currentTime;
+
+    let result: number = TimeUnit.ZERO;
+
+    if (duration !== TimeUnit.ZERO && currentTime !== TimeUnit.ZERO) {
+      result = currentTime / duration * PROGRESS_BAR_MAX_VALUE;
+    }
+
+    return result;
+  };
+
+  const playBtnText = playerScreenState.isPlaying ? 'Pause' : 'Play';
+  const correctIcon = playerScreenState.isPlaying ? <PauseIcon /> : <PlayIcon />;
+
   return (
     <div className="player">
       <PageTitle pageName={pageName} />
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <VideoPlayer
+        videoSrc={videoLink}
+        previewImg={previewImage}
+        isPlaying={playerScreenState.isPlaying}
+        isFullscreen={playerScreenState.isFullscreen}
+        updateCurrentTime={getCurrentTime}
+        getDuration={getCurrentDuration}
+        backgroundColor={backgroundColor}
+        changeFullscreenStatus={revertFullscreenStatus}
+      />
 
-      <button type="button" className="player__exit">Exit</button>
+      <button type="button" className="player__exit" onClick={handleExitBtnClick}>Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value="30" max="100"></progress>
-            <div className="player__toggler" style={{left: '30%',}}>Toggler</div>
+            <progress className="player__progress" value={getCorrectTogglerPostion()} max={PROGRESS_BAR_MAX_VALUE}></progress>
+            <div className="player__toggler" style={{ left: `${getCorrectTogglerPostion()}%`, }}>Toggler</div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div className="player__time-value">{getCorrectTime()}</div>
         </div>
 
         <div className="player__controls-row">
-          <button type="button" className="player__play">
-            <svg viewBox="0 0 19 19" width="19" height="19">
-              <use xlinkHref="#play-s"></use>
-            </svg>
-            <span>Play</span>
+          <button type="button" className="player__play" onClick={handlePlayBtnClick}>
+            {correctIcon}
+            <span>{playBtnText}</span>
           </button>
           <div className="player__name">Transpotting</div>
 
-          <button type="button" className="player__full-screen">
-            <svg viewBox="0 0 27 27" width="27" height="27">
-              <use xlinkHref="#full-screen"></use>
-            </svg>
+          <button type="button" className="player__full-screen" onClick={handleFullscreenBtnClick}>
+            <FullscreenIcon />
             <span>Full screen</span>
           </button>
         </div>

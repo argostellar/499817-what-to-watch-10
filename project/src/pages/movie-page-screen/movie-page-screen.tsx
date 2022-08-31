@@ -10,10 +10,12 @@ import { AppRoute, AuthorizationStatus, PosterSize, Tab } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import UserBlock from '../../components/user-block/user-block';
 import FilmCardListBtn from '../../components/film-card-list-btn/film-card-list-btn';
-import { fetchCommentsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
+import { fetchCommentsAction, fetchCurrentFilmAction, fetchSimilarFilmsAction } from '../../store/api-actions';
 import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
 import FilmCardBackground from '../../components/film-card-bg/film-card-bg';
 import { changeGenre } from '../../store/action';
+import { useFilmId } from '../../hooks/use-film-id';
+import PlayBtn from '../../components/play-btn/play-btn';
 
 type MoviePageState = {
   currentTab: string,
@@ -25,6 +27,7 @@ function MoviePageScreen(): JSX.Element {
 
   const { authorizationStatus } = useAppSelector((state) => state);
   const { currentFilm } = useAppSelector((state) => state);
+  const id = useFilmId();
 
   const {
     name,
@@ -36,10 +39,13 @@ function MoviePageScreen(): JSX.Element {
   } = currentFilm;
 
   useLayoutEffect(() => {
-    dispatch(changeGenre(genre));
-    dispatch(fetchSimilarFilmsAction());
-    dispatch(fetchCommentsAction());
-  }, [currentFilm]);
+    if (id !== undefined) {
+      dispatch(fetchCurrentFilmAction(id));
+      dispatch(fetchSimilarFilmsAction(id));
+      dispatch(fetchCommentsAction(id));
+      dispatch(changeGenre(genre));
+    }
+  }, [id]);
 
   const [pageState, setPageState] = useState<MoviePageState>({
     currentTab: Tab.Overview,
@@ -77,12 +83,7 @@ function MoviePageScreen(): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
+                <PlayBtn />
                 <FilmCardListBtn />
                 {authorizationStatus === AuthorizationStatus.Auth && <Link to={AppRoute.Review} className="btn film-card__button">Add review</Link>}
               </div>

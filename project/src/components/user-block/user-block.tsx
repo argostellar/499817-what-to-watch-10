@@ -1,12 +1,13 @@
 import { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus, EmptyUser } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
 
 function UserBlock(): JSX.Element {
-  const { authorizationStatus } = useAppSelector((state) => state);
-
+  const { authorizationStatus, user } = useAppSelector((state) => state);
+  // при переходе по прямой ссылке не загружается пользователь. необходимо решить этот вопрос
+  const { avatarUrl, name } = user !== null ? user : EmptyUser;
   const dispatch = useAppDispatch();
 
   const handleClick = (evt: MouseEvent<HTMLAnchorElement>) => {
@@ -24,7 +25,7 @@ function UserBlock(): JSX.Element {
         <li className="user-block__item">
           <Link to={AppRoute.MyList}>
             <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+              <img src={avatarUrl} alt={`${name} avatar`} title={`${name} favorites`} width="63" height="63" />
             </div>
           </Link>
         </li>

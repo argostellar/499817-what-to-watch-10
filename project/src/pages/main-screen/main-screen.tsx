@@ -10,6 +10,7 @@ import UserBlock from '../../components/user-block/user-block';
 import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
 import FilmCardListBtn from '../../components/film-card-list-btn/film-card-list-btn';
 import { resetMainPage } from '../../store/action';
+import PlayBtn from '../../components/play-btn/play-btn';
 
 function MainScreen(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -54,12 +55,7 @@ function MainScreen(): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
+                <PlayBtn />
                 <FilmCardListBtn />
               </div>
             </div>

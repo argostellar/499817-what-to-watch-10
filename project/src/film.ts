@@ -19,11 +19,11 @@ export const getCorrectAPIRoute = (route: APIRoute, id: number, status = 0) => {
 };
 
 export const getCorrectAppRoute = (route: APIRoute, payload: number | string) => {
-  payload = payload.toString();
+  const formatedPayload = payload.toString();
   let correctRoute = route;
   const filmIdRegExp = /:id/gi;
   if (route === APIRoute.Film) {
-    correctRoute = route.replace(filmIdRegExp, payload) as APIRoute;
+    correctRoute = route.replace(filmIdRegExp, formatedPayload) as APIRoute;
   }
   return correctRoute;
 };

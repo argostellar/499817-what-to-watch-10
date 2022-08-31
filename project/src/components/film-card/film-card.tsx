@@ -1,9 +1,7 @@
-import { useState, MouseEvent } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FILM_CARD_VALUES } from '../../const';
-import { useAppDispatch } from '../../hooks';
-import { fetchCurrentFilmAction } from '../../store/api-actions';
-import VideoPlayer from '../video-player/video-player';
+import PreviewVideoPlayer from '../preview-video-player/preview-video-player';
 
 type FilmCardProps = {
   id: number;
@@ -19,12 +17,6 @@ function FilmCard(props: FilmCardProps): JSX.Element {
 
   const [isPlaying, setPlayingState] = useState(false);
   let hoverTimerID: NodeJS.Timeout | undefined;
-
-  const dispatch = useAppDispatch();
-
-  const handleClick = (evt: MouseEvent<HTMLAnchorElement>) => {
-    dispatch(fetchCurrentFilmAction(id));
-  };
 
   const handleMouseOver = () => {
     hoverTimerID = setTimeout(() => {
@@ -49,7 +41,7 @@ function FilmCard(props: FilmCardProps): JSX.Element {
         onMouseOut={handleMouseOut}
       >
         {/* <img src={posterSrc} alt={name} width="280" height="175" /> */}
-        <VideoPlayer
+        <PreviewVideoPlayer
           videoSrc={videoSrc}
           posterSrc={posterSrc}
           width={FILM_CARD_VALUES.WIDTH}
@@ -60,7 +52,7 @@ function FilmCard(props: FilmCardProps): JSX.Element {
         />
       </div>
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={filmAddress} onClick={handleClick}>{name}</Link>
+        <Link className="small-film-card__link" to={filmAddress}>{name}</Link>
       </h3>
     </article>
   );

@@ -2,6 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, Genre } from '../const';
 import { Film, Films } from '../types/film';
 import { Reviews } from '../types/review';
+import { UserData } from '../types/user-data';
 import {
   changeGenre,
   getGenreFilms,
@@ -16,6 +17,8 @@ import {
   loadComments,
   resetMainPage,
   setDataSendedStatus,
+  setUserProfile,
+  removeUserProfile,
 } from './action';
 
 type stateType = {
@@ -30,6 +33,7 @@ type stateType = {
   isDataSended: boolean;
   authorizationStatus: AuthorizationStatus;
   error: string | null;
+  user: UserData | null;
 };
 
 const initialState: stateType = {
@@ -44,6 +48,7 @@ const initialState: stateType = {
   isDataSended: true,
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
+  user: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -80,6 +85,12 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
+    })
+    .addCase(setUserProfile, (state, action) => {
+      state.user = action.payload;
+    })
+    .addCase(removeUserProfile, (state) => {
+      state.user = null;
     })
     .addCase(resetMainPage, (state) => {
       state.genre = Genre.ALL;

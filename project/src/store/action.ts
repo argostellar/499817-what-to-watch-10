@@ -2,6 +2,7 @@ import { createAction } from '@reduxjs/toolkit';
 import { APIRoute, AuthorizationStatus } from '../const';
 import { Film, Films } from '../types/film';
 import { Reviews } from '../types/review';
+import { UserData } from '../types/user-data';
 
 export const changeGenre = createAction('list/changeGenre', (value) => ({payload: value}));
 export const getGenreFilms = createAction('list/getGenreFilms', (value) => ({ payload: value }));
@@ -18,4 +19,6 @@ export const setDataSendedStatus = createAction<boolean>('data/setDataSendedStat
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 export const setError = createAction<string | null>('app/setError');
 export const redirectToRoute = createAction<APIRoute | string>('app/redirectToRoute');
+export const setUserProfile = createAction<UserData>('user/setUserProfile');
+export const removeUserProfile = createAction('user/removeUserProfile');
 

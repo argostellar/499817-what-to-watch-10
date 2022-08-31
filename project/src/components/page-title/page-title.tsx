@@ -7,7 +7,7 @@ type PageTitleProps = {
 function PageTitle({pageName}: PageTitleProps): JSX.Element {
   return (
     <Helmet>
-      <title>WTW: {pageName}</title>
+      <title>{`WTW: ${pageName}`}</title>
     </Helmet>
   );
 }

@@ -1,3 +1,4 @@
+import { MouseEvent } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -24,14 +25,15 @@ function GenresList(): JSX.Element {
   const setItemClassName = (itemGenre: string) => classNames({ 'catalog__genres-item': true, 'catalog__genres-item--active': itemGenre === currentGenre });
 
   const genres = getGenresList(films);
-  const handleGenreClick = (value:string) => {
+  const handleGenreClick = (value:string) => (evt: MouseEvent<HTMLLIElement>) => {
+    evt.preventDefault();
     dispatch(changeGenre(value));
   };
   return (
     <ul className="catalog__genres-list">
       {genres.map(
         (item) => (
-          <li className={setItemClassName(item)} key={item} onClick={() => handleGenreClick(item)}>
+          <li className={setItemClassName(item)} key={item} onClick={handleGenreClick(item)}>
             <Link className="catalog__genres-link" to={''}>{item}</Link>
           </li>
         )
