@@ -18,7 +18,7 @@ function FilmPageDetails(props: FilmPageDetailsProps): JSX.Element {
     return formatedRuntime;
   };
 
-  const actorsList = actors.join(', ');
+  const actorsList = actors !== undefined ? actors.join(', ') : 'Error occured';
   return (
     <div className="film-card__text film-card__row">
       <div className="film-card__text-col">

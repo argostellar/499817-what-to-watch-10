@@ -8,7 +8,6 @@ import {
   getGenreFilms,
   loadFilms,
   setDataLoadedStatus,
-  resetApp,
   requireAuthorization,
   setError,
   loadCurrentFilm,
@@ -95,12 +94,6 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(resetMainPage, (state) => {
       state.genre = Genre.ALL;
       state.currentFilm = {} as Film;
-      state.genreFilms = [];
-    })
-    /*#TODO Необходимо переделать данное действие */
-    .addCase(resetApp, (state) => {
-      state.genre = Genre.ALL;
-      state.films = [];
       state.genreFilms = [];
     });
 });

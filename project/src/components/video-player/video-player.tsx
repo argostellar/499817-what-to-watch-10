@@ -8,11 +8,22 @@ type VideoPlayerProps = {
   backgroundColor: string;
   updateCurrentTime: (currentTime: number) => void;
   getDuration: (duration: number) => void;
+  getLoadStatus: () => void;
   changeFullscreenStatus: () => void;
 }
 
 function VideoPlayer(props: VideoPlayerProps): JSX.Element {
-  const { videoSrc, isPlaying, isFullscreen, previewImg, backgroundColor, updateCurrentTime, getDuration, changeFullscreenStatus } = props;
+  const {
+    videoSrc,
+    isPlaying,
+    isFullscreen,
+    previewImg,
+    backgroundColor,
+    updateCurrentTime,
+    getDuration,
+    changeFullscreenStatus,
+    getLoadStatus,
+  } = props;
   const playerRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
@@ -49,9 +60,10 @@ function VideoPlayer(props: VideoPlayerProps): JSX.Element {
     }
   };
 
-  const handleLoadStart = (evt: SyntheticEvent<HTMLVideoElement>) => {
+  const handleCanPlay = (evt: SyntheticEvent<HTMLVideoElement>) => {
     if (playerRef.current !== null) {
       getDuration(playerRef.current.duration);
+      getLoadStatus();
     }
   };
 
@@ -66,7 +78,7 @@ function VideoPlayer(props: VideoPlayerProps): JSX.Element {
     <video
       ref={playerRef}
       onTimeUpdate={handleUpdate}
-      onCanPlay={handleLoadStart}
+      onCanPlay={handleCanPlay}
       className="player__video"
       src={videoSrc}
       poster={previewImg}

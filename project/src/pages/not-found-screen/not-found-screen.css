@@ -1,0 +1,31 @@
+.not-found {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 100vw;
+  min-height: 100vh;
+  background-color: #e1b0b2;
+}
+
+.not-found__title,
+.not-found__text,
+.not-found__link {
+  color: #eee5b5;
+  text-shadow: 2px 2px 1px #000;
+}
+
+.not-found__title {
+  font-size: 10vw;
+  text-shadow: 4px 4px 1px #000;
+}
+
+.not-found__link {
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+
+.not-found__link:hover {
+  text-decoration: none;
+  text-shadow: none;
+}

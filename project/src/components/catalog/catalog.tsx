@@ -38,8 +38,6 @@ function Catalog(): JSX.Element {
   const currentGenre = useAppSelector((state) => state.genre);
   const currentGenreFilms = useAppSelector((state) => getCurrentGenreFilms(state.films, currentGenre));
 
-  // const currentFilms = useAppSelector((state) => state.films);
-
   const initCatalog = (films: Films): void => {
     const totalCardsCount = films.length;
     const cardsCount = totalCardsCount > CARDS_LIST_VALUES.CARDS_PER_RENDER

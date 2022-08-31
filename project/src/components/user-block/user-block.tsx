@@ -6,7 +6,6 @@ import { logoutAction } from '../../store/api-actions';
 
 function UserBlock(): JSX.Element {
   const { authorizationStatus, user } = useAppSelector((state) => state);
-  // при переходе по прямой ссылке не загружается пользователь. необходимо решить этот вопрос
   const { avatarUrl, name } = user !== null ? user : EmptyUser;
   const dispatch = useAppDispatch();
 

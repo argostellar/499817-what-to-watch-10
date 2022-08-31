@@ -6,7 +6,6 @@ import { UserData } from '../types/user-data';
 
 export const changeGenre = createAction('list/changeGenre', (value) => ({payload: value}));
 export const getGenreFilms = createAction('list/getGenreFilms', (value) => ({ payload: value }));
-export const resetApp = createAction('app/resetApp');
 export const resetMainPage = createAction('app/resetMainPage');
 export const loadFilms = createAction<Films>('app/loadFilms');
 export const loadSimilarFilms = createAction<Films>('film/loadSimilarFilms');

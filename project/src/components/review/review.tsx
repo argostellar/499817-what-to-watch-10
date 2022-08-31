@@ -5,11 +5,12 @@ type ReviewItemProps = {
   review: Review;
 }
 
-function ReviewItem({review}: ReviewItemProps): JSX.Element {
-  const { comment, user: {name: author}, date, rating } = review;
-  /*#TODO Переделать даты на необходимый формат */
+function ReviewItem({ review }: ReviewItemProps): JSX.Element {
+  const { comment, user: { name: author }, date, rating } = review;
+
   const formatedDate = dayjs(date).format('MMMM D, YYYY');
   const attributeDate = date.toString();
+
   return (
     <div className="review">
       <blockquote className="review__quote">

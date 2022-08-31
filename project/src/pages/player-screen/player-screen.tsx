@@ -1,4 +1,3 @@
-// import { useParams } from 'react-router-dom';
 import { useState, MouseEvent, useEffect } from 'react';
 import FullscreenIcon from '../../components/fullscreen-icon/fullscreen-icon';
 import PageTitle from '../../components/page-title/page-title';
@@ -72,6 +71,13 @@ function PlayerScreen(): JSX.Element {
     }));
   };
 
+  const getLoadStatus = () => {
+    setScreenState((prevState) => ({
+      ...prevState,
+      isPlaying: true,
+    }));
+  };
+
   const getCurrentTime = (seconds: number) => {
     setScreenState((prevState) => ({
       ...prevState,
@@ -136,6 +142,7 @@ function PlayerScreen(): JSX.Element {
         getDuration={getCurrentDuration}
         backgroundColor={backgroundColor}
         changeFullscreenStatus={revertFullscreenStatus}
+        getLoadStatus={getLoadStatus}
       />
 
       <button type="button" className="player__exit" onClick={handleExitBtnClick}>Exit</button>

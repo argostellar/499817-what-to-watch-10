@@ -1,4 +1,3 @@
-// import { useParams } from 'react-router-dom';
 import { useLayoutEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';

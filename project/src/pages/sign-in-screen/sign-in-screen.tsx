@@ -15,13 +15,11 @@ function SignInScreen(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { authorizationStatus } = useAppSelector((state) => state);
+  const { authorizationStatus, error: errorMessage } = useAppSelector((state) => state);
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
   };
-
-  const errorMessage = 'errorField#TODO';
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();

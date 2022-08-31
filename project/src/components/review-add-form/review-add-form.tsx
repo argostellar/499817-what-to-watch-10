@@ -20,7 +20,7 @@ function ReviewAddForm(): JSX.Element {
   const rating = useAppSelector((state) => Math.trunc(state.currentFilm.rating));
 
   const [formState, setFormState] = useState<ReviewFormState>({
-    rating: rating.toString(),
+    rating: rating !== ReviewRating.NONE ? rating.toString() : ReviewRating.MIN.toString(),
     reviewText: '',
     isFormLocked: false,
     isBtnLocked: true,
@@ -51,7 +51,6 @@ function ReviewAddForm(): JSX.Element {
   const unlockBtnCondition = formState.reviewText.length >= ReviewTextareaSize.MIN && formState.reviewText.length <= ReviewTextareaSize.MAX;
 
   const handleRadioChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    // evt.preventDefault();
     const { value } = target;
     setFormState((prevState) => ({
       ...prevState,
@@ -67,10 +66,6 @@ function ReviewAddForm(): JSX.Element {
     }));
   };
 
-  // const handleFormSubmit = (evt: MouseEvent<HTMLButtonElement>) => {
-  //   evt.preventDefault();
-  //   // console.log(formState);
-  // };
   const onSubmit = (userComment: UserComment) => {
     dispatch(addCommentAction(userComment));
   };
@@ -85,10 +80,9 @@ function ReviewAddForm(): JSX.Element {
         rating: Number(score),
       });
     }
-    // dispatch(redirectToRoute());
   };
 
-  const genereateRadioBtnProtoArray = (itemValue = 1) => Array.from({ length: ReviewRating.MAX }, () => itemValue);
+  const genereateRadioBtnProtoArray = (itemValue = ReviewRating.MIN) => Array.from({ length: ReviewRating.MAX }, () => itemValue);
 
   const generateRadioBtns = (currentNumber: number) => (
     <>
@@ -114,9 +108,6 @@ function ReviewAddForm(): JSX.Element {
     </>
   );
 
-  /*#TODO Убрать после задействования состояния */
-  const formStateString = `Rating: ${formState.rating}; Text: ${formState.reviewText.length}; FormLocked: ${formState.isFormLocked} BtnLocked: ${formState.isBtnLocked}`;
-
   return (
     <form
       ref={formRef}
@@ -124,7 +115,6 @@ function ReviewAddForm(): JSX.Element {
       className="add-review__form"
       onSubmit={handleFormSubmit}
     >
-      <pre style={{color: 'black'}}>{formStateString}</pre>
       <div className="rating">
         <div className="rating__stars">
           {genereateRadioBtnProtoArray().map((_item, index, array) => generateRadioBtns(array.length - index))}
@@ -149,7 +139,6 @@ function ReviewAddForm(): JSX.Element {
         <div className="add-review__submit">
           <button
             className="add-review__btn"
-            // onClick={handleFormSubmit}
             type="submit"
             disabled={formState.isBtnLocked || formState.isFormLocked}
           >

@@ -40,7 +40,6 @@ function FilmCard(props: FilmCardProps): JSX.Element {
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
       >
-        {/* <img src={posterSrc} alt={name} width="280" height="175" /> */}
         <PreviewVideoPlayer
           videoSrc={videoSrc}
           posterSrc={posterSrc}
