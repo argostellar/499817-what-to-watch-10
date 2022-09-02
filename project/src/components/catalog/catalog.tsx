@@ -73,10 +73,6 @@ function Catalog(): JSX.Element {
   };
 
   useEffect(() => {
-    initCatalog(currentFilms);
-  }, []);
-
-  useEffect(() => {
     let isNeedUpdate = true;
     setCatalogState((prevState) => ({
       ...prevState,

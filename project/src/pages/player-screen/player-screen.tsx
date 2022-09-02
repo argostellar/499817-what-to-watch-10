@@ -14,7 +14,6 @@ import { fetchCurrentFilmAction } from '../../store/api-actions';
 type PlayerScreenState = {
   isPlaying: boolean;
   isFullscreen: boolean;
-  // isDirect: boolean;
   currentTime: number;
   duration: number;
 };
@@ -29,7 +28,6 @@ function PlayerScreen(): JSX.Element {
   const [playerScreenState, setScreenState] = useState<PlayerScreenState>({
     isPlaying: false,
     isFullscreen: false,
-    // isDirect: false,
     currentTime: 0,
     duration: 0,
   });
@@ -37,7 +35,6 @@ function PlayerScreen(): JSX.Element {
   useEffect(() => {
     if (filmId !== undefined) {
       resetPlayerScreen();
-      // setTransferStatus();
       dispatch(fetchCurrentFilmAction(filmId));
     }
   }, [filmId]);
@@ -77,7 +74,6 @@ function PlayerScreen(): JSX.Element {
     setScreenState(() => ({
       isPlaying: false,
       isFullscreen: false,
-      // isDirect: false,
       currentTime: 0,
       duration: 0,
     }));
