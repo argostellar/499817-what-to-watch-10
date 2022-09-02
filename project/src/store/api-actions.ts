@@ -1,6 +1,17 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
+import { APIRoute, AuthorizationStatus, TIMEOUT_DIRECT_TRANSFER, TIMEOUT_SHOW_ERROR } from '../const';
+import { Film, Films } from '../types/film';
+import { dropToken, saveToken } from '../services/token';
+import { AuthData } from '../types/auth-data';
+import { UserData } from '../types/user-data';
+import { store } from './';
+import { Reviews } from '../types/review';
+import { getCorrectAPIRoute } from '../film';
+import { UserComment } from '../types/user-comment';
+import { FavoriteStatus } from '../types/favorite-status';
+import { processErrorHandle } from '../services/process-error-handle';
 import {
   loadComments,
   loadCurrentFilm,
@@ -13,19 +24,9 @@ import {
   redirectToRoute,
   setDataSendedStatus,
   removeUserProfile,
-  setUserProfile
+  setUserProfile,
+  setDirectTransfer
 } from './action';
-import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
-import { Film, Films } from '../types/film';
-import { dropToken, saveToken } from '../services/token';
-import { AuthData } from '../types/auth-data';
-import { UserData } from '../types/user-data';
-import { store } from './';
-import { Reviews } from '../types/review';
-import { getCorrectAPIRoute } from '../film';
-import { UserComment } from '../types/user-comment';
-import { FavoriteStatus } from '../types/favorite-status';
-import { processErrorHandle } from '../services/process-error-handle';
 
 export const clearErrorAction = createAsyncThunk(
   'app/clearError',
@@ -33,6 +34,16 @@ export const clearErrorAction = createAsyncThunk(
     setTimeout(
       () => store.dispatch(setError(null)),
       TIMEOUT_SHOW_ERROR,
+    );
+  },
+);
+
+export const clearDirectTransferAction = createAsyncThunk(
+  'app/clearDirectTransfer',
+  () => {
+    setTimeout(
+      () => store.dispatch(setDirectTransfer(false)),
+      TIMEOUT_DIRECT_TRANSFER,
     );
   },
 );
@@ -171,8 +182,6 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
     try {
       await api.get(APIRoute.Login);
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      // const { data } = await api.get<UserData>(APIRoute.Login);
-      // dispatch(setUserProfile(data));
     } catch {
       dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }

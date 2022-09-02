@@ -107,6 +107,7 @@ export const ReviewTextareaSize = {
 export const ReviewRating = {
   NONE: 0,
   MIN: 1,
+  DEFAULT: 8,
   MAX: 10,
 } as const;
 
@@ -119,6 +120,7 @@ export const EmptyUser: UserData = {
 } as const;
 
 export const TIMEOUT_SHOW_ERROR = 3000;
+export const TIMEOUT_DIRECT_TRANSFER = 1000;
 
 export const PROGRESS_BAR_MAX_VALUE = 100;
 

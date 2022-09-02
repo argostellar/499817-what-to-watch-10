@@ -1,5 +1,4 @@
-import { FormEvent, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { FormEvent, useEffect, useRef } from 'react';
 import { AppRoute, AuthorizationStatus, Page } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
@@ -7,6 +6,7 @@ import { AuthData } from '../../types/auth-data';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
 import PageTitle from '../../components/page-title/page-title';
+import { useNavigate } from 'react-router-dom';
 
 function SignInScreen(): JSX.Element {
   const emailRef = useRef<HTMLInputElement | null>(null);
@@ -32,9 +32,11 @@ function SignInScreen(): JSX.Element {
     }
   };
 
-  if (authorizationStatus === AuthorizationStatus.Auth) {
-    navigate(AppRoute.Root);
-  }
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      navigate(AppRoute.Root);
+    }
+  }, [authorizationStatus]);
 
   return (
     <div className="user-page">
@@ -74,7 +76,7 @@ function SignInScreen(): JSX.Element {
                 placeholder="Password"
                 name="user-password"
                 id="user-password"
-                pattern="[a-zA-Z0-9_]{3,15}"
+                pattern="([a-zA-Z_]{1,20}[a-zA-Z0-9_]{1,20}[0-9]{1,20})|([0-9]{1,20}[a-zA-Z0-9_]{1,20}[a-zA-Z_]{1,20})"
                 required
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>

@@ -1,4 +1,4 @@
-import {Route, Routes} from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
 import Layout from '../layout/layout';
@@ -12,8 +12,9 @@ import SignInScreen from '../../pages/sign-in-screen/sign-in-screen';
 import PrivateRoute from '../private-route/private-route';
 import PreloaderScreen from '../../pages/preloader-screen/preloader-screen';
 import { isCheckedAuth } from '../../film';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
+import { HelmetProvider } from 'react-helmet-async';
 
 function App(): JSX.Element {
   const { authorizationStatus, isDataLoaded } = useAppSelector((state) => state);
@@ -25,54 +26,56 @@ function App(): JSX.Element {
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
-      <Routes>
-        <Route path={AppRoute.Root} element={<Layout />}>
-          <Route
-            index
-            element={
-              <MainScreen />
-            }
-          />
-          <Route
-            path={AppRoute.MyList}
-            element={
-              <PrivateRoute
-                authorizationStatus={authorizationStatus}
-              >
-                <MyListScreen/>
-              </PrivateRoute>
-            }
-          />
-          <Route path={AppRoute.SignIn} element={<SignInScreen />} />
-          <Route path={AppRoute.Films}>
+    <HelmetProvider>
+      <HistoryRouter history={browserHistory}>
+        <Routes>
+          <Route path={AppRoute.Root} element={<Layout />}>
             <Route
-              path={AppRoute.Film}
+              index
               element={
-                <MoviePageScreen />
+                <MainScreen />
               }
             />
             <Route
-              path={AppRoute.AddReview}
+              path={AppRoute.MyList}
               element={
                 <PrivateRoute
                   authorizationStatus={authorizationStatus}
                 >
-                  <AddReviewScreen />
+                  <MyListScreen />
                 </PrivateRoute>
               }
             />
+            <Route path={AppRoute.SignIn} element={<SignInScreen />} />
+            <Route path={AppRoute.Films}>
+              <Route
+                path={AppRoute.Film}
+                element={
+                  <MoviePageScreen />
+                }
+              />
+              <Route
+                path={AppRoute.AddReview}
+                element={
+                  <PrivateRoute
+                    authorizationStatus={authorizationStatus}
+                  >
+                    <AddReviewScreen />
+                  </PrivateRoute>
+                }
+              />
+            </Route>
           </Route>
-        </Route>
-        <Route
-          path={AppRoute.Player}
-          element={
-            <PlayerScreen />
-          }
-        />
-        <Route path="*" element={<NotFoundScreen />} />
-      </Routes>
-    </HistoryRouter>
+          <Route
+            path={AppRoute.Player}
+            element={
+              <PlayerScreen />
+            }
+          />
+          <Route path="*" element={<NotFoundScreen />} />
+        </Routes>
+      </HistoryRouter>
+    </HelmetProvider>
   );
 }
 

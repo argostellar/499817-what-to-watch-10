@@ -2,7 +2,8 @@ import { MouseEvent } from 'react';
 import { APIRoute } from '../../const';
 import { getCorrectAPIRoute } from '../../film';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { redirectToRoute } from '../../store/action';
+import { redirectToRoute, setDirectTransfer } from '../../store/action';
+import { clearDirectTransferAction } from '../../store/api-actions';
 import PlayIcon from '../play-icon/play-icon';
 
 function PlayBtn(): JSX.Element {
@@ -10,6 +11,8 @@ function PlayBtn(): JSX.Element {
   const { id } = useAppSelector((state) => state.currentFilm);
 
   const handleClick = (evt: MouseEvent<HTMLButtonElement>) => {
+    dispatch(setDirectTransfer(true));
+    dispatch(clearDirectTransferAction());
     dispatch(redirectToRoute(getCorrectAPIRoute(APIRoute.Player, id)));
   };
 

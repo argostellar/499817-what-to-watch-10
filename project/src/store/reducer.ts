@@ -18,6 +18,7 @@ import {
   setDataSendedStatus,
   setUserProfile,
   removeUserProfile,
+  setDirectTransfer,
 } from './action';
 
 type stateType = {
@@ -30,6 +31,7 @@ type stateType = {
   currentReviews: Reviews;
   isDataLoaded: boolean;
   isDataSended: boolean;
+  isDirect: boolean;
   authorizationStatus: AuthorizationStatus;
   error: string | null;
   user: UserData | null;
@@ -45,6 +47,7 @@ const initialState: stateType = {
   currentReviews: [],
   isDataLoaded: false,
   isDataSended: true,
+  isDirect: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
   user: null,
@@ -90,6 +93,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(removeUserProfile, (state) => {
       state.user = null;
+    })
+    .addCase(setDirectTransfer, (state, action) => {
+      state.isDirect = action.payload;
     })
     .addCase(resetMainPage, (state) => {
       state.genre = Genre.ALL;

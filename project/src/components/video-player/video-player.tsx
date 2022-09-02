@@ -5,6 +5,7 @@ type VideoPlayerProps = {
   previewImg: string;
   isPlaying: boolean;
   isFullscreen: boolean;
+  isDirect: boolean;
   backgroundColor: string;
   updateCurrentTime: (currentTime: number) => void;
   getDuration: (duration: number) => void;
@@ -17,6 +18,7 @@ function VideoPlayer(props: VideoPlayerProps): JSX.Element {
     videoSrc,
     isPlaying,
     isFullscreen,
+    isDirect,
     previewImg,
     backgroundColor,
     updateCurrentTime,
@@ -63,7 +65,7 @@ function VideoPlayer(props: VideoPlayerProps): JSX.Element {
   const handleCanPlay = (evt: SyntheticEvent<HTMLVideoElement>) => {
     if (playerRef.current !== null) {
       getDuration(playerRef.current.duration);
-      getLoadStatus();
+      isDirect === true && getLoadStatus();
     }
   };
 

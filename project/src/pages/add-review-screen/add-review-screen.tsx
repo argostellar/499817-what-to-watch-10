@@ -1,5 +1,4 @@
-import { useLayoutEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import FilmCardBackground from '../../components/film-card-bg/film-card-bg';
 import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
@@ -9,6 +8,7 @@ import ReviewAddFormComponent from '../../components/review-add-form/review-add-
 import UserBlock from '../../components/user-block/user-block';
 import { Page, PosterSize } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useFilmId } from '../../hooks/use-film-id';
 import { fetchCurrentFilmAction } from '../../store/api-actions';
 
 function AddReviewScreen(): JSX.Element {
@@ -17,12 +17,11 @@ function AddReviewScreen(): JSX.Element {
   const { id, name, posterImage, backgroundImage, backgroundColor } = currentFilm;
   const pageName = `${Page.AddReview}${name}`;
 
-  const { id: filmId } = useParams();
+  const filmId = useFilmId();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (filmId !== undefined) {
-      const formatedId = Number(filmId);
-      dispatch(fetchCurrentFilmAction(formatedId));
+      dispatch(fetchCurrentFilmAction(filmId));
     }
   }, [filmId]);
 

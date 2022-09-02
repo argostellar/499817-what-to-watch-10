@@ -9,14 +9,17 @@ import ShowMoreBtn from '../show-more-btn/show-more-btn';
 
 type CatalogState = {
   genre: string;
+  filmsToRender: Films;
   totalCards: number;
   renderedCards: number;
   isShowMoreBtn: boolean;
 }
 
 function Catalog(): JSX.Element {
+  const dispatch = useAppDispatch();
   const [catalogState, setCatalogState] = useState<CatalogState>({
     genre: Genre.ALL,
+    filmsToRender: [] as Films,
     totalCards: CARDS_LIST_VALUES.NO_CARDS_COUNT,
     renderedCards: CARDS_LIST_VALUES.NO_CARDS_COUNT,
     isShowMoreBtn: false,
@@ -34,8 +37,8 @@ function Catalog(): JSX.Element {
     return films.filter((item) => item.genre === genre);
   };
 
-  const dispatch = useAppDispatch();
   const currentGenre = useAppSelector((state) => state.genre);
+  const currentFilms = useAppSelector((state) => state.films);
   const currentGenreFilms = useAppSelector((state) => getCurrentGenreFilms(state.films, currentGenre));
 
   const initCatalog = (films: Films): void => {
@@ -70,21 +73,28 @@ function Catalog(): JSX.Element {
   };
 
   useEffect(() => {
-    let isNeedUpdate = true;
+    initCatalog(currentFilms);
+  }, []);
 
+  useEffect(() => {
+    let isNeedUpdate = true;
+    setCatalogState((prevState) => ({
+      ...prevState,
+      filmsToRender: currentGenreFilms,
+    }));
     dispatch(getGenreFilms(currentGenreFilms));
     isNeedUpdate && initCatalog(currentGenreFilms);
 
     return () => {
       isNeedUpdate = false;
     };
-  }, [currentGenre]);
+  }, [currentGenre, currentFilms]);
 
   return (
     <section className='catalog'>
       <h2 className="catalog__title visually-hidden">Catalog</h2>
       <GenresList />
-      <FilmList films={getFilmsToRender(currentGenreFilms, catalogState.renderedCards)} />
+      <FilmList films={getFilmsToRender(catalogState.filmsToRender, catalogState.renderedCards)} />
       {catalogState.isShowMoreBtn && <ShowMoreBtn handleClick={handleShowMoreBtnClick} />}
     </section>
   );

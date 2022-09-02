@@ -16,6 +16,7 @@ export const loadComments = createAction<Reviews>('film/loadComments');
 export const setDataLoadedStatus = createAction<boolean>('data/setDataLoadedStatus');
 export const setDataSendedStatus = createAction<boolean>('data/setDataSendedStatus');
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
+export const setDirectTransfer = createAction<boolean>('app/setDirectTransfer');
 export const setError = createAction<string | null>('app/setError');
 export const redirectToRoute = createAction<APIRoute | string>('app/redirectToRoute');
 export const setUserProfile = createAction<UserData>('user/setUserProfile');

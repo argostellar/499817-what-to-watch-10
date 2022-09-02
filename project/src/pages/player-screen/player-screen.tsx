@@ -7,11 +7,14 @@ import VideoPlayer from '../../components/video-player/video-player';
 import { APIRoute, Page, TimeUnit, PROGRESS_BAR_MAX_VALUE } from '../../const';
 import { getCorrectAPIRoute } from '../../film';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useFilmId } from '../../hooks/use-film-id';
 import { redirectToRoute } from '../../store/action';
+import { fetchCurrentFilmAction } from '../../store/api-actions';
 
 type PlayerScreenState = {
   isPlaying: boolean;
   isFullscreen: boolean;
+  // isDirect: boolean;
   currentTime: number;
   duration: number;
 };
@@ -19,14 +22,25 @@ type PlayerScreenState = {
 function PlayerScreen(): JSX.Element {
   const dispatch = useAppDispatch();
   const { id, name, backgroundColor, previewImage, videoLink } = useAppSelector((state) => state.currentFilm);
+  const isDirect = useAppSelector((state) => state.isDirect);
   const pageName = `${Page.Player} ${name}`;
+  const filmId = useFilmId();
 
   const [playerScreenState, setScreenState] = useState<PlayerScreenState>({
     isPlaying: false,
     isFullscreen: false,
+    // isDirect: false,
     currentTime: 0,
     duration: 0,
   });
+
+  useEffect(() => {
+    if (filmId !== undefined) {
+      resetPlayerScreen();
+      // setTransferStatus();
+      dispatch(fetchCurrentFilmAction(filmId));
+    }
+  }, [filmId]);
 
   useEffect(() => {
     if (playerScreenState.currentTime === playerScreenState.duration) {
@@ -39,12 +53,7 @@ function PlayerScreen(): JSX.Element {
 
   const handleExitBtnClick = (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
-    setScreenState(() => ({
-      isPlaying: false,
-      isFullscreen: false,
-      currentTime: 0,
-      duration: 0,
-    }));
+    resetPlayerScreen();
     dispatch(redirectToRoute(getCorrectAPIRoute(APIRoute.Film, id)));
   };
 
@@ -61,6 +70,16 @@ function PlayerScreen(): JSX.Element {
     setScreenState((prevState) => ({
       ...prevState,
       isFullscreen: true,
+    }));
+  };
+
+  const resetPlayerScreen = () => {
+    setScreenState(() => ({
+      isPlaying: false,
+      isFullscreen: false,
+      // isDirect: false,
+      currentTime: 0,
+      duration: 0,
     }));
   };
 
@@ -138,6 +157,7 @@ function PlayerScreen(): JSX.Element {
         previewImg={previewImage}
         isPlaying={playerScreenState.isPlaying}
         isFullscreen={playerScreenState.isFullscreen}
+        isDirect={isDirect}
         updateCurrentTime={getCurrentTime}
         getDuration={getCurrentDuration}
         backgroundColor={backgroundColor}

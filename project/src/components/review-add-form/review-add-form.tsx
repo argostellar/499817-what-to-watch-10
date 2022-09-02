@@ -3,6 +3,7 @@ import { ReviewRating, ReviewTextareaSize } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addCommentAction } from '../../store/api-actions';
 import { UserComment } from '../../types/user-comment';
+import StarRadioBtn from '../star-radio-btn/star-radio-btn';
 
 type ReviewFormState = {
   rating: string;
@@ -19,8 +20,10 @@ function ReviewAddForm(): JSX.Element {
   const { isDataSended } = useAppSelector((state) => state);
   const rating = useAppSelector((state) => Math.trunc(state.currentFilm.rating));
 
+  const correctRating = rating !== ReviewRating.NONE ? rating.toString() : ReviewRating.MIN.toString();
+
   const [formState, setFormState] = useState<ReviewFormState>({
-    rating: rating !== ReviewRating.NONE ? rating.toString() : ReviewRating.MIN.toString(),
+    rating: !isNaN(rating) ? correctRating : ReviewRating.DEFAULT.toString(),
     reviewText: '',
     isFormLocked: false,
     isBtnLocked: true,
@@ -82,31 +85,21 @@ function ReviewAddForm(): JSX.Element {
     }
   };
 
-  const genereateRadioBtnProtoArray = (itemValue = ReviewRating.MIN) => Array.from({ length: ReviewRating.MAX }, () => itemValue);
-
-  const generateRadioBtns = (currentNumber: number) => (
-    <>
-      <input
-        className="rating__input"
-        onChange={handleRadioChange}
-        id={`star-${currentNumber}`}
-        type="radio"
-        name="rating"
-        value={currentNumber}
-        defaultChecked={currentNumber.toString() === formState.rating}
-        disabled={formState.isFormLocked}
-        key={currentNumber}
-        required
-      />
-      <label
-        className="rating__label"
-        htmlFor={`star-${currentNumber}`}
-        title={currentNumber.toString()}
-      >
-        Rating {currentNumber}
-      </label>
-    </>
-  );
+  const generateRadioBtns = () => {
+    const protoStars = Array.from({ length: ReviewRating.MAX }, () => ReviewRating.MIN);
+    return protoStars.map((_item, index, array) => {
+      const currentNumber = array.length - index;
+      return (
+        <StarRadioBtn
+          ratingValue={currentNumber}
+          handleRadioChange={handleRadioChange}
+          currentRating={formState.rating}
+          isLocked={formState.isFormLocked}
+          key={currentNumber}
+        />
+      );
+    });
+  };
 
   return (
     <form
@@ -117,7 +110,7 @@ function ReviewAddForm(): JSX.Element {
     >
       <div className="rating">
         <div className="rating__stars">
-          {genereateRadioBtnProtoArray().map((_item, index, array) => generateRadioBtns(array.length - index))}
+          {generateRadioBtns()}
         </div>
       </div>
 

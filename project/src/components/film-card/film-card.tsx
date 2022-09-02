@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FILM_CARD_VALUES } from '../../const';
+import { APIRoute, FILM_CARD_VALUES } from '../../const';
+import { getCorrectAPIRoute } from '../../film';
+import { useAppDispatch } from '../../hooks';
+import { redirectToRoute } from '../../store/action';
 import PreviewVideoPlayer from '../preview-video-player/preview-video-player';
 
 type FilmCardProps = {
@@ -12,6 +15,7 @@ type FilmCardProps = {
 }
 
 function FilmCard(props: FilmCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const { id, name, videoSrc, posterSrc, backgroundColor } = props;
   const filmAddress = `/films/${id}`;
 
@@ -31,9 +35,14 @@ function FilmCard(props: FilmCardProps): JSX.Element {
     setPlayingState(false);
   };
 
+  const handleClick = (evt: MouseEvent<HTMLElement>) => {
+    dispatch(redirectToRoute(getCorrectAPIRoute(APIRoute.Film, id)));
+  };
+
   return (
     <article
       className="small-film-card catalog__films-card"
+      onClick={handleClick}
     >
       <div
         className="small-film-card__image"
